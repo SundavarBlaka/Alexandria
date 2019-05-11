@@ -1,0 +1,15 @@
+UTENTI ( pk: username, email, indirizzo, telefono, nome, cognome, ddn )
+
+LIBRERIA ( pk: (utente ->fk, idRisorsa -> fk) )
+
+MESSAGGI ( pk: id, mittente -> fk, destinatario -> fk, timestamp, contenuto )
+
+COMMENTI ( pk: id, utente -> fk, contenuto, risorsa -> fk, timestamp )
+
+RISORSE ( pk: id, titolo, categoria -> fk, descrizione, prezzo, foto, isVenduto ) 
+
+CATEGORIE ( pk: nomeCat )
+
+INTERESSI ( pk: ( utente -> fk, nomeCat -> fk ) )
+
+VENDITA ( pk: (utenteA ->fk, utenteB -fk, risorsa ->fk), timestamp )
