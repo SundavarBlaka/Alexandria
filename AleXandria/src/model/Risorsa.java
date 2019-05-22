@@ -5,10 +5,15 @@ import java.util.List;
 
 import javax.persistence.*;
 
+@Entity
 public class Risorsa {
 	@Id @GeneratedValue
 	@Column(name="RES_ID")
 	private long id;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="VENDITA_ID", nullable=true)
+	private Vendita vendita;
 	
 	private String titolo;
 	private Categoria categoria;

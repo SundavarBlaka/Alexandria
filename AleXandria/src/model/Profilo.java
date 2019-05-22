@@ -11,10 +11,6 @@ public class Profilo {
 	@Column(name="USERNAME")
 	private String username;
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="VENDITA_ID", nullable=true)
-	private Vendita vendita;
-	
 	private String nome;
 	private String cognome;
 	
@@ -92,12 +88,6 @@ public class Profilo {
 	}
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
-	}
-	public Vendita getVendita() {
-		return vendita;
-	}
-	public void setVendita(Vendita vendita) {
-		this.vendita = vendita;
 	}
 	public List<Risorsa> getLibreria() {
 		return libreria;
