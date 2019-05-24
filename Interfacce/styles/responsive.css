@@ -141,12 +141,14 @@
         height: auto;
     }
     .product_slider_item .product-item {
-        height: 380px;
+        height: auto;
     }
     .site-blocks-table {
         position: relative;
         margin-top: 8%;
-        width: 100%;
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
     }
     .site-blocks-table img {
         width: 30px;
@@ -208,6 +210,9 @@
     .login_container {
         width: 60%;
         margin-left: 20%;
+    }
+    .profile{
+        margin-left: 5%;
     }
 }
 

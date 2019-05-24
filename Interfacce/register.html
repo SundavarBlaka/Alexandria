@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="Italiano">
 
 <head>
-    <title>AleXandria-Login</title>
+    <title>AleXandria-Registrazione</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/AleXa.bmp">
+    <link rel="icon" href="images/AleXandria_Logo.png">
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="styles/login_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/responsive.css">
-
-
 </head>
 
 <body>
@@ -27,8 +25,20 @@
                     <input type="text" class="reg_surname" placeholder="Cognome"> <br> Data di Nascit&agrave;:<br>
                     <input type="date" class="reg_date" placeholder="Data di Nascit&agrave;"><br> Email: <br>
                     <input type="email" class="reg_email" placeholder="Email"><br> Telefono: <br>
-                    <input type="tel" class="reg_telefono" placeholder="Numero di Telefono"><br> Interessi: <br>
-                    <input type="text" class="reg_interests" placeholder="Interessi"><br> Crea una password: <br>
+                    <input type="tel" class="reg_telefono" placeholder="Numero di Telefono"><br>Indirizzo: <br>
+                    <input type="text" class="reg_address" placeholder="Indirizzo"><br>
+                    <div id="interests" class="interests" tabindex="100" >
+                        <span class="anchor" onclick="showInterests()">Interessi</span>
+                        <ul class="items" id="items">
+                            <li><input type="checkbox"/>Fantascienza </li>
+                            <li><input type="checkbox"/>Fantascienza </li>
+                            <li><input type="checkbox"/>Fantascienza </li>
+                            <li><input type="checkbox"/>Fantascienza </li>
+                            <li><input type="checkbox"/>Fantascienza </li>
+                            <li><input type="checkbox"/>Fantascienza </li>
+                        </ul>
+                    </div>
+                    <br> Crea una password: <br>
                     <input type="password" class="reg_password" placeholder="Password"><br>Conferma password: <br>
                     <input type="password" class="reg_password_confirm" placeholder="Conferma Password"><br> <br>
                     <input type="submit" class="reg_btn" value="Registrati"><br> <br> Hai gi&agrave; un account?
@@ -37,11 +47,10 @@
             </div>
         </div>
     </div>
-    <script src="js/register.js "></script>
+    <script src="js/login.js "></script>
     <script src="js/jquery-3.2.1.min.js "></script>
     <script src="styles/bootstrap4/popper.js "></script>
     <script src="styles/bootstrap4/bootstrap.min.js "></script>
-
 
 </body>
 
