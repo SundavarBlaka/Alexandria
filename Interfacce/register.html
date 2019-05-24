@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ page import="it.alexandria.hibernate.model.Categoria"%>
 <html lang="Italiano">
 
 <head>
@@ -30,12 +30,11 @@
                     <div id="interests" class="interests" tabindex="100" >
                         <span class="anchor" onclick="showInterests()">Interessi</span>
                         <ul class="items" id="items">
-                            <li><input type="checkbox"/>Fantascienza </li>
-                            <li><input type="checkbox"/>Fantascienza </li>
-                            <li><input type="checkbox"/>Fantascienza </li>
-                            <li><input type="checkbox"/>Fantascienza </li>
-                            <li><input type="checkbox"/>Fantascienza </li>
-                            <li><input type="checkbox"/>Fantascienza </li>
+                          <%
+                            for(Categoria c: Categoria.values()){
+                              out.println("<li><input type=\"checkbox\" name=\""+c.toString()+"\" value=\""+c.toString()+"\"> "+c.toString()+"<li>");
+                            }
+                            %>
                         </ul>
                     </div>
                     <br> Crea una password: <br>

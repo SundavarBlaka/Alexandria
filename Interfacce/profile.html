@@ -1,4 +1,16 @@
-<!DOCTYPE html>
+<%@ page import="java.util.*"%>
+<html lang="it">
+
+<%
+		HttpSession sessione=request.getSession();
+		String username = (String) sessione.getAttribute("username");
+		String nome = (String) sessione.getAttribute("nome");
+		String cognome = (String) sessione.getAttribute("cognome");
+		Date data = (Date) sessione.getAttribute("data");
+		String email = (String) sessione.getAttribute("email");
+		String numeroTel = (String) sessione.getAttribute("numeroTel");
+		String indirizzo = (String) sessione.getAttribute("indirizzo");
+%>
 <html lang="it">
 
 <head>
@@ -117,12 +129,12 @@
         <div class="profile_container">
             <div class="profile">
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <h5 class="username" ">Username</h5>
-			 <h6 class=" name_surname ">Nome Cognome</h6>
-					Data di Nascit&agrave;: <h6 class=" birthday ">01/01/1990</h6>
-					Email: <h6 class=" email ">alexa@mail.com</h6>
-					Tel: <h6 class=" tel ">+391234567891</h6>
-					Indirizzo: <h6 class=" address ">Via AleXandria 8</h6>
+                <h5 class="username" ><%=username%></h5>
+			 <h6 class=" name_surname "><%=nome+" "+cognome%></h6>
+					Data di Nascit&agrave;: <h6 class=" birthday "><%=data.toString()%></h6>
+					Email: <h6 class=" email "><%=email%></h6>
+					Tel: <h6 class=" tel "><%=numeroTel%></h6>
+					Indirizzo: <h6 class=" address "><%=indirizzo%></h6>
 					Interessi:<br>
 					<ul class="profile_interests">
 						<li>Fantascienza</li>
