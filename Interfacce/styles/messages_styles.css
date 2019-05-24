@@ -16,9 +16,15 @@
 1. Messages
 *********************************/
 
+html {
+	height:100%;
+}
+body {
+	height:100%;
+	margin:0px;
+}
 .message_container {
     max-width: 30%;
-    max-height: 50%;
 }
 
 .inbox_people {
@@ -27,6 +33,7 @@
     overflow: hidden;
     width: 30%;
     border-right: 1px solid #ddd;
+    height: 100%;
 }
 ::selection {
     background: #fde0db;
@@ -36,6 +43,7 @@
     border: 1px solid #ddd;
     clear: both;
     overflow: hidden;
+    height: 100%;
 }
 
 .top_spac {
@@ -104,8 +112,8 @@
 }
 
 .inbox_chat {
-    height: 550px;
     overflow-y: scroll;
+    height: 90%;
 }
 
 .active_chat {
@@ -142,7 +150,8 @@
 
 .mesgs {
     float: left;
-    padding: 30px 15px 0 25px;
+    height: 100%;
+    padding: 10px 15px 0 25px;
     width: 70%;
 }
 
@@ -182,6 +191,7 @@
 .type_msg {
     border-top: 1px solid #c4c4c4;
     position: relative;
+    height: 7%;
 }
 
 .msg_send_btn {
@@ -199,11 +209,16 @@
 }
 
 .messaging {
-    padding: 0 0 0 0;
+        position:fixed !important;
+        height: 100%;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
 }
 
 .msg_history {
-    height: 516px;
+    height: 92%;
     overflow-y: auto;
 }
 
@@ -211,6 +226,7 @@
     display: none;
     padding: 15px 15px 15px 15px;
     overflow: hidden;
+    height: 7%;
     border-bottom: 1px solid #c4c4c4;
 }
 
@@ -232,6 +248,12 @@
     .inbox_people {
         display: block;
         width: 100%;
+    }
+    .msg_history {
+        height: 86% ;
+    }
+    .inbox_chat {
+        height: 90%;
     }
     .mesgs {
         display: none;
