@@ -715,7 +715,7 @@ section {
     margin-bottom: 10%;
 }
 
-.interests {
+.profile_interests {
     color: green;
 }
 
@@ -736,7 +736,7 @@ section {
     font-size: 25px;
 }
 
-#modify_button {
+.modify_button {
     margin-top: 5%;
     background-color: #fe4c50;
     border-style: solid;
@@ -745,11 +745,60 @@ section {
     color: white;
 }
 
-#modify {
+.modify {
     display: none;
 }
+.interests {
+    display: inline-block;
+    border-style: none;
+    margin-bottom: 5%;
+    margin-top: 5%;
+  }
+  .interests .anchor {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding: 2px 80px 2px 30px;
+    border: 1px solid #ccc;
+    
+  }
+  .interests .anchor:after {
+    position: absolute;
+    content: "";
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    padding: 5px;
+    right: 10px;
+    top: 20%;
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+  }
+  .interests ul.items {
+    padding: 2px;
+    height: 95px;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    overflow-y: scroll;
+}
+.items{
+    display: none;
+    text-align: left;
 
-
+}
+  .interests ul.items li {
+    list-style: none;
+}
+.items li {
+    padding-left: 5px;
+    padding-right: 10px;
+    border-radius: 5px; 
+    margin: 2px;
+    background-color: #fe4c50;
+}
 /*********************************
 5. Footer
 *********************************/
@@ -822,4 +871,7 @@ footer {
 
 .footer_social ul li a:hover {
     color: #fe4c50;
+}
+.modify_form input{
+    margin-bottom: 1%;
 }
