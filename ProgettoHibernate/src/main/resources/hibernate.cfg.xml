@@ -15,6 +15,7 @@
  <mapping class="it.alexandria.hibernate.model.Profilo"/>
  <mapping class="it.alexandria.hibernate.model.Risorsa"/>
  <mapping class="it.alexandria.hibernate.model.Vendita"/>
+ <mapping class="it.alexandria.hibernate.model.Credenziali"/>
  </session-factory>
 </hibernate-configuration>
 

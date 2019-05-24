@@ -8,11 +8,23 @@
 		<servlet-name>Login</servlet-name>
 		<servlet-class>it.alexandria.hibernate.control.Login</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>Profilo</servlet-name>
+		<servlet-class>it.alexandria.hibernate.view.ViewHomeUtente</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>Login</servlet-name>
 		<url-pattern>/loginsubmit</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Profilo</servlet-name>
+		<url-pattern>/profile</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>login.html</welcome-file>
 	</welcome-file-list>
+	<welcome-file-list>
+		<welcome-file>login.html</welcome-file>
+	</welcome-file-list>
+	
 </web-app>
