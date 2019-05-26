@@ -187,7 +187,7 @@ jQuery(document).ready(function($)
 			plus.on('click', function()
 			{
 				var x = parseInt(value.text());
-				value.text(x + 1);
+				$('#quantity_value').text(x + 1);
 			});
 
 			minus.on('click', function()
@@ -195,7 +195,7 @@ jQuery(document).ready(function($)
 				var x = parseInt(value.text());
 				if(x > 1)
 				{
-					value.text(x - 1);
+					$('#quantity_value').text(x - 1);
 				}
 			});
 		}

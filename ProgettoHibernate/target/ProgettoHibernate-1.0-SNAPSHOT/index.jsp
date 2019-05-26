@@ -1,9 +1,10 @@
 <%@ page import="it.alexandria.hibernate.model.Risorsa"%>
+<%@ page import="it.alexandria.hibernate.model.Carrello"%>
 <%@ page import="java.util.*"%>
-<jsp:useBean id="cart" scope="session" class="it.alexandria.hibernate.model.Carrello" />
 <html lang="Italiano">
 <%
 	List<Risorsa> risorse=(List<Risorsa>)request.getSession().getAttribute("risorseRicercate");
+	Carrello carrello=(Carrello) request.getSession().getAttribute("carrello");
 %>
 
 <head>
@@ -69,9 +70,9 @@
                                     <li><a href="messages.html "><i class="fa fa-envelope " aria-hidden="true "></i></a></li>
                                     <li><a href="profile.jsp"><i class="fa fa-user " aria-hidden="true "></i></a></li>
                                     <li class="checkout ">
-                                        <a href="cart.html ">
+                                        <a href="cart.jsp">
                                             <i class="fa fa-shopping-cart " aria-hidden="true "></i>
-                                            <span id="checkout_items " class="checkout_items ">2</span>
+                                            <span id="checkout_items " class="checkout_items "><%=carrello.getRisorseSelezionate().size()%></span>
                                         </a>
                                     </li>
                                 </ul>
@@ -146,7 +147,7 @@
                                         <input type="hidden" name="id" value="<%=r.getId()%>">
                                         <input type="submit" value="<%=r.getTitolo()%>">
                                         </form>
-                                        <div class="product_price "><%=r.getPrezzo()%></div>
+                                        <div class="product_price ">&euro;<%=r.getPrezzo()%></div>
                                     </div>
                                 </div>
                             </div>

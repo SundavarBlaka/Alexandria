@@ -95,9 +95,10 @@ public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		Profilo profilo = (Profilo) session.get(Profilo.class, username);
+		@SuppressWarnings("unchecked")
+		List<Risorsa> risorse = (List<Risorsa>) session.createQuery("FROM RISORSA WHERE RES_OWNER = :RES").setParameter("RES", username).getResultList();
 		
-		request.getSession().setAttribute("libreria", profilo.getLibreria());
+		request.getSession().setAttribute("libreria",risorse);
 		session.getTransaction().commit();
 		session.close();
 		

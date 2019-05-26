@@ -2,12 +2,13 @@
 <%@ page import="java.text.*"%>
 <%@ page import="it.alexandria.hibernate.model.Categoria"%>
 <%@ page import="it.alexandria.hibernate.model.UCMapping"%>
-<jsp:useBean id="cart" scope="session" class="it.alexandria.hibernate.model.Carrello" />
+<%@ page import="it.alexandria.hibernate.model.Carrello"%>
 
 <html lang="it">
 
 <%
 		HttpSession sessione=request.getSession();
+		Carrello carrello=(Carrello) request.getSession().getAttribute("carrello");
 		String username = (String) sessione.getAttribute("username");
 		String nome = (String) sessione.getAttribute("nome");
 		String cognome = (String) sessione.getAttribute("cognome");
@@ -81,9 +82,9 @@
                                     <li><a href="messages.html "><i class="fa fa-envelope " aria-hidden="true "></i></a></li>
                                     <li><a href="profile.jsp"><i class="fa fa-user " aria-hidden="true "></i></a></li>
                                     <li class="checkout ">
-                                        <a href="cart.html ">
+                                        <a href="cart.jsp">
                                             <i class="fa fa-shopping-cart " aria-hidden="true "></i>
-                                            <span id="checkout_items " class="checkout_items ">2</span>
+                                            <span id="checkout_items " class="checkout_items "><%=carrello.getRisorseSelezionate().size()%></span>
                                         </a>
                                     </li>
                                 </ul>
@@ -186,39 +187,39 @@
 
 
     </div>
-    <!-- Footer -->
-    <footer class="footer zz" style="height:20%;width:100%">
-        <div class="container" style="min-height:100%;min-width:100%">
-            <div class="row" style="width:100%;height:50%">
-                <div class="col-lg-6" style="width:100%;height:50%">
-                    <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center
-                    justify-content-lg-start justify-content-center text-center" style="margin:0;">
-                        <ul class="footer_nav" style="margin:0;">
-                            <li><a href="contact.html">Contattaci</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-6" style="width:100%;height:50%">
-                    <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end
-                    justify-content-center" style="margin:0;">
-                        <ul style="margin:0;">
-                            <li><a href="#"><i class=" fa fa-facebook" aria-hidden=" true "></i></a></li>
-                            <li><a href="#"><i class=" fa fa-twitter" aria-hidden=" true "></i></a></li>
-                            <li><a href="https://www.instagram.com/_.alex_andria._"><i class="fa fa-instagram"
-                                        aria-hidden=" true "></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="width:100%;height:50%">
-                <div class="col-lg-12" style="width:100%;height:100%">
-                    <div class="footer_nav_container" style="margin:0;width:100%;height:100%">
-                        <div class="cr">©2019 All Rights Reserverd.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+   <!-- Footer -->
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div
+						class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
+						<ul class="footer_nav">
+							<li><a href="contact.html">Contattaci</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div
+						class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+						<ul>
+							<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+							<li><a href="https://www.instagram.com/_.alex_andria._"><i class="fa fa-instagram"
+										aria-hidden="true"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="footer_nav_container">
+						<div class="cr">©2019 All Rights Reserverd.</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
     <script src="js/profile.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="styles/bootstrap4/popper.js"></script>

@@ -1,13 +1,15 @@
 <%@ page import="it.alexandria.hibernate.model.Profilo"%>
 <%@ page import="it.alexandria.hibernate.model.Risorsa"%>
 <%@ page import="it.alexandria.hibernate.model.Categoria"%>
+<%@ page import="it.alexandria.hibernate.model.Carrello"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.*"%>
 <%
 	HttpSession sessione=request.getSession();
 	List<Risorsa> libreria = (List<Risorsa>) sessione.getAttribute("libreria");
+	Carrello carrello=(Carrello) request.getSession().getAttribute("carrello");
 %>
-<html lang="Italiano">
+<html lang="it">
 
 <head>
     <title>AleXandria-Library</title>
@@ -73,9 +75,9 @@
                                     </li>
                                     <li><a href="profile.jsp"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                                     <li class="checkout">
-                                        <a href="cart.html">
+                                        <a href="cart.jsp">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="checkout_items" class="checkout_items">2</span>
+                                            <span id="checkout_items" class="checkout_items"><%=carrello.getRisorseSelezionate().size()%></span>
                                         </a>
                                     </li>
                                 </ul>
@@ -142,7 +144,7 @@
                     %>
                     <h6><%=formatted%></h6>
                     <p><%=r.getDescrizione()%></p>
-                    <b><%=r.getPrezzo()%>&euro;</b>
+                    &euro;<b><%=r.getPrezzo()%></b>
                 </div>
             </div>
         <% } %>

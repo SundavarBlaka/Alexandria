@@ -133,4 +133,32 @@ public class Risorsa implements Serializable{
 	public void setUrl(String urlImmagine) {
 		this.url = urlImmagine;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((autori == null) ? 0 : autori.hashCode());
+		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
+		result = prime * result + ((commenti == null) ? 0 : commenti.hashCode());
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result + ((descrizione == null) ? 0 : descrizione.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + Float.floatToIntBits(prezzo);
+		result = prime * result + ((proprietario == null) ? 0 : proprietario.hashCode());
+		result = prime * result + ((titolo == null) ? 0 : titolo.hashCode());
+		result = prime * result + ((url == null) ? 0 : url.hashCode());
+		result = prime * result + ((vendita == null) ? 0 : vendita.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		return this.id==((Risorsa)obj).id;
+	}
+	
 }

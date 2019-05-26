@@ -1,6 +1,8 @@
 package it.alexandria.hibernate.control;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 
+import it.alexandria.hibernate.model.Commento;
+import it.alexandria.hibernate.model.Profilo;
 import it.alexandria.hibernate.model.Risorsa;
 
 public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
@@ -26,6 +30,8 @@ public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
 			modificaRisorsa(request,response);
 		}else if(tipo.contentEquals("mostra")) {
 			mostraRisorsa(request,response);
+		}else if(tipo.equals("inserisciCommento")) {
+			inserisciCommento(request,response);
 		}
 	}
 
@@ -44,8 +50,39 @@ public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
 	}
 
 	public void inserisciCommento(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		Date data=java.sql.Timestamp.valueOf(LocalDateTime.now());
+		String username=request.getParameter("username");
+		String testo=request.getParameter("testo");
 		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		Profilo profilo = (Profilo) session.get(Profilo.class, username);
+		Risorsa risorsa=(Risorsa)request.getSession().getAttribute("risorsa");
+		Commento commento = new Commento();
+		commento.setData(data);
+		commento.setMittente(profilo);
+		commento.setRisorsaConnessa(risorsa);
+		commento.setTesto(testo);
+		
+		session.save(commento);
+		session.getTransaction().commit();
+		session.close();
+		
+		session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		
+		risorsa = (Risorsa) session.get(Risorsa.class, risorsa.getId());
+		request.getSession().setAttribute("risorsa", risorsa);
+		session.getTransaction().commit();
+		session.close();
+		
+		try {
+			
+			response.sendRedirect("single.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void rimuoviCommento(HttpServletRequest request, HttpServletResponse reponse) {

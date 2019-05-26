@@ -20,6 +20,14 @@
 		<servlet-name>Resource</servlet-name>
 		<servlet-class>it.alexandria.hibernate.control.GestioneRisorsa</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>Profile</servlet-name>
+		<servlet-class>it.alexandria.hibernate.control.GestioneProfilo</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Profile</servlet-name>
+		<url-pattern>/profile</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Search</servlet-name>
 		<url-pattern>/search</url-pattern>

@@ -2,12 +2,15 @@
 <%@ page import="it.alexandria.hibernate.model.Risorsa"%>
 <%@ page import="it.alexandria.hibernate.model.Categoria"%>
 <%@ page import="it.alexandria.hibernate.model.Commento"%>
+<%@ page import="it.alexandria.hibernate.model.Carrello"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.*"%>
 <%
 	Risorsa risorsa=(Risorsa)request.getSession().getAttribute("risorsa");
+	String username=(String)request.getSession().getAttribute("username");
+	Carrello carrello=(Carrello) request.getSession().getAttribute("carrello");
 %>
-<html lang="Italiano">
+<html lang="it">
 
 <head>
 	<title>AleXandria-Single  </title>
@@ -65,17 +68,17 @@
 						<div class="col-lg-12 text-right">
 							<nav class="navbar">
 								<ul class="navbar_menu">
-									<li><a href="index.jsp">home</a></li>
-									<li><a href="library">libraria</a></li>
+									<li><a href="search">home</a></li>
+									<li><a href="library">libreria</a></li>
 								</ul>
 								<ul class="navbar_user">
 									<li><a href="messages.html"><i class="fa fa-envelope" aria-hidden="true"></i></a>
 									</li>
-									<li><a href="profile.html"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+									<li><a href="profile.jsp"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 									<li class="checkout">
-										<a href="cart.html">
+										<a href="cart.jsp">
 											<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-											<span id="checkout_items" class="checkout_items">2</span>
+											<span id="checkout_items" class="checkout_items"><%=carrello.getRisorseSelezionate().size()%></span>
 										</a>
 									</li>
 								</ul>
@@ -144,21 +147,45 @@
 								Contatta il Venditore</a>
 						</div>
 					</div>
-					<div class="product_price">&euro;<%=risorsa.getPrezzo()%></div>
+					<div id="price" class="product_price">&euro;<%=risorsa.getPrezzo()%></div>
 
 					<div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
 						<span>Quantit&agrave;:</span>
 						<div class="quantity_selector">
-							<span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
+					<script type = "text/JavaScript">
+				        function Plus(){
+				        	var val=parseInt($('#quantity_value').text())+1;
+				        	$('#quantity_value').text(val);
+				        	$('#quantity').val(val);
+				        	$('#price').html('&euro;'+parseFloat(val*<%=risorsa.getPrezzo()%>).toFixed(2));
+				        }
+				        function Minus(){
+				        	var val=parseInt($('#quantity_value').text())-1;
+        					$('#quantity_value').text(val);
+        					$('#quantity').val(val);
+							$('#price').html('&euro;'+parseFloat(val*<%=risorsa.getPrezzo()%>).toFixed(2));
+        				}
+					</script>
+							<span class="minus" onclick="Minus()"><i class="fa fa-minus" aria-hidden="true"></i></span>
 							<span id="quantity_value">1</span>
-							<span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
+							<span class="plus" onclick="Plus()"><i class="fa fa-plus" aria-hidden="true"></i></span>
 						</div>
-						<div class="red_button add_to_cart_button"><a href="#">Aggiungi al Carrello</a>
+						<div class="red_button add_to_cart_button">
+						<form method="get" action="profile">
+							<input type="hidden" value="aggiungi" name="type">
+							<input type="hidden" name="id" value="<%=risorsa.getId()%>">
+							<input type="hidden" id="quantity" name="quantity" value="1">
+							<input type="submit" value="Aggiungi al Carrello">
+						</form>
 						</div> <br>
-						
 					</div>
-					<br> <br>
-					<div class="buy_button"><a href="#">Acquista</a></div>
+					<div class="buy_button">
+					<form method="get" action="profile">
+						<input type="hidden" value="acquista" name="type">
+						<input type="hidden" name="id" value="<%=risorsa.getId()%>">
+						<input type="submit" value="Acquista">
+					</form>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -168,9 +195,8 @@
 	<div class="comments_container">
 		<h3>Commenti <i class="fa fa-comments-o" aria-hidden="true"></i></h3>
 		<div class="comments_box">
-		<% for(Commento c: risorsa.getCommenti()) { %>
-			<div class="comments" id="<%=c.getId()%>">
-
+			<div class="comments">
+				<% for(Commento c: risorsa.getCommenti()) { %>
 				<div class="users_comments">
 					<span class="username_comment"><strong><i class="fa fa-user"></i><%=c.getMittente().getUsername()%></strong></span>
 					<div class="comment">
@@ -178,7 +204,7 @@
 						</p>
 						<span class="time_date"> 
 					<%
-                    SimpleDateFormat format=new SimpleDateFormat("hh:mm | MM dd");
+                    SimpleDateFormat format=new SimpleDateFormat("hh:mm | yyyy/MM/dd");
 					Calendar rapr=Calendar.getInstance();
 					rapr.setTime(c.getData());
 					String formatted=format.format(rapr.getTime());
@@ -186,14 +212,15 @@
                     <%=formatted%></span>
 					</div>
 				</div>
+				<% } %>
 			</div>
-		<% } %>
 			<div class="add_comment">
 				<div class="input_write_comment">
-					<form class="comment_form" action="#">
-						<input type="text" class="write_comment" placeholder="  Aggiungi un Commento..." />
-						<button class="comment_send_btn" type="button"><i class="fa fa-comment"
-								aria-hidden="true"></i></button>
+					<form class="comment_form" action="resource" method="get">
+						<input type="hidden" name="type" value="inserisciCommento">
+						<input type="hidden" name="username" value="<%=username%>">
+						<input type="text" name="testo" class="write_comment" placeholder="  Aggiungi un Commento..." />
+						<input type=submit class="comment_send_btn" value="+"></i></button>
 					</form>
 				</div>
 			</div>

@@ -1,6 +1,7 @@
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\IGestioneLibreria.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\model\UCMapping.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\HibernateUtil.java
+C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\IGestioneProfilo.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\GestioneLibreria.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\GestioneRisorsa.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\model\Risorsa.java
@@ -10,6 +11,7 @@ C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\h
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\Login.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\model\Commento.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\IGestioneRisorsa.java
+C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\GestioneProfilo.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\model\Messaggio.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\model\Profilo.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\Ricerca.java

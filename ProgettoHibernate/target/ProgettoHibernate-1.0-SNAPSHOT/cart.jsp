@@ -1,5 +1,9 @@
-<%@ page import="it.alexandria.hibernate.model.UCMapping"%>
-<jsp:useBean id="cart" scope="session" class="it.alexandria.hibernate.model.Carrello" />
+<%@ page import="it.alexandria.hibernate.model.Carrello"%>
+<%@ page import="it.alexandria.hibernate.model.Risorsa"%>
+<%@ page import="java.util.*"%>
+<%
+	Carrello carrello=(Carrello) request.getSession().getAttribute("carrello");
+%>
 <html lang="it">
 
 <head>
@@ -16,7 +20,7 @@
 
 <body>
 
-    <div class="super_container">
+    <div class="super_container" style="overflow:scroll;">
 
         <!-- Header -->
 
@@ -55,22 +59,18 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 text-right">
-                            <div class="logo_container">
-                                <div class="logo_image"><img src="images/AleXandria_Logo.png" alt="AleXandria"></div>
-                                <div class="logo_name"><a href="index.html">AleX<span>andria</span></a></div>
-                            </div>
                             <nav class="navbar">
                                 <ul class="navbar_menu">
-                                    <li><a href="index.html">home</a></li>
-                                    <li><a href="library.html">libreria</a></li>
+                                    <li><a href="search">home</a></li>
+                                    <li><a href="library">libreria</a></li>
                                 </ul>
                                 <ul class="navbar_user">
                                     <li><a href="messages.html"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
-                                    <li><a href="profile.html"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                    <li><a href="profile.jsp"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                                     <li class="checkout">
-                                        <a href="cart.html">
+                                        <a href="cart.jsp">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="checkout_items" class="checkout_items">2</span>
+                                            <span id="checkout_items" class="checkout_items"><%=carrello.getRisorseSelezionate().size()%></span>
                                         </a>
                                     </li>
                                 </ul>
@@ -110,66 +110,46 @@
 
         <!--Cart Table-->
 
-        <div class="row mb-5">
-            <form class="col-md-12" method="post">
+        <div class="row mb-5" style="overflow:scroll;">
+            <div class="col-md-12" >
                 <div class="site-blocks-table">
+                
                     <table class="table table-bordered">
-                        <thead>
                             <tr>
                                 <th class="product-thumbnail">Imagine</th>
                                 <th class="product-name">Prodotto</th>
                                 <th class="product-price">Prezzo</th>
-                                <th class="product-remove">Rimuovi</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                        </table>
+                        <% for(Risorsa r : carrello.getRisorseSelezionate()) { %>
+                        
+                        <table class="table table-bordered">
                             <tr>
                                 <td class="product-thumbnail">
-                                    <img src="images/AleXa.bmp" alt="Image" class="img-fluid">
+                                    <img src=<%=r.getUrl()%> alt="Image" class="img-fluid">
                                 </td>
                                 <td class="product-name">
-                                    <span class="product_name"><b>AleXandria</b></span>
+                                    <span class="product_name"><b><%=r.getTitolo()%></b></span>
                                 </td>
-                                <td>&euro;49.00</td>
+                                <td>&euro;<%=r.getPrezzo()%></td>
 
-                                <td>
-                                    <a href="#" class="fa fa-trash"></a>
-                                </td>
                             </tr>
-                            <tr>
-                                <td class="product-thumbnail">
-                                    <img src="images/AleXa.bmp" alt="Image" class="img-fluid">
-                                </td>
-                                <td class="product-name">
-                                    <span class="product_name"><b>AleXandria</b></span>
-                                </td>
-                                <td>&euro;49.00</td>
-                                <td>
-                                    <a href="#" class="fa fa-trash"></a>                                  
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="product-thumbnail">
-                                    <img src="images/AleXa.bmp" alt="Image" class="img-fluid">
-                                </td>
-                                <td class="product-name">
-                                    <span class="product_name"><b>AleXandria</b></span>
-                                </td>
-                                <td>&euro;49.00</td>
-
-                                <td>
-                                    <a href="#" class="fa fa-trash"></a> <br>
-                                    
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        </table>
+                        <form method="get" action="profile">
+                        	<input type="hidden" name="type" value="rimuovi">
+                            <input type="hidden" name="id" value="<%=r.getId()%>">
+                            <input type="submit" value="rimuovi">
+                        </form>
+                        <% } %>
                     <br>
-                    <div class="buy_button"><a href="#">Procedi all'ordine </a>
+                    <div class="buy_button">
+                    <form action="profile" method="get">
+                    	<input type="hidden" name="type" value="ordine">
+                    	<input type="submit" value="Procedi all'ordine">
+                    </form>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
 
         <!-- Footer -->

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
 
+import it.alexandria.hibernate.model.Carrello;
 import it.alexandria.hibernate.model.Categoria;
 import it.alexandria.hibernate.model.Credenziali;
 import it.alexandria.hibernate.model.Messaggio;
@@ -78,6 +79,9 @@ public class Login extends HttpServlet implements ILogin {
 			sessione.setAttribute("indirizzo", profilo.getIndirizzo());
 			sessione.setAttribute("email", profilo.getEmail());
 			sessione.setAttribute("interessi", interessi);
+			Carrello carrello=new Carrello();
+			carrello.setRisorseSelezionate(new ArrayList<Risorsa>());
+			sessione.setAttribute("carrello", carrello);
 		} else {
 			try {
 				response.sendRedirect("/alexandria");
