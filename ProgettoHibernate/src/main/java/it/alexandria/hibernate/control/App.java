@@ -1,13 +1,10 @@
 package it.alexandria.hibernate.control;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 
-import it.alexandria.hibernate.model.Categoria;
 import it.alexandria.hibernate.model.Commento;
 import it.alexandria.hibernate.model.Messaggio;
 import it.alexandria.hibernate.model.Profilo;

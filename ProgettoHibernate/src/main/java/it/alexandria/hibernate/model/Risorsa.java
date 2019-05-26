@@ -33,12 +33,14 @@ public class Risorsa implements Serializable{
 	private float prezzo;
 	private String descrizione;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="RES_OWNER")
 	private Profilo proprietario;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="risorsaConnessa")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="risorsaConnessa", fetch=FetchType.EAGER)
 	private List<Commento> commenti;
+	
+	private String url;
 
 	public long getId() {
 		return id;
@@ -114,5 +116,21 @@ public class Risorsa implements Serializable{
 
 	public Risorsa() {
 		super();
+	}
+
+	public Vendita getVendita() {
+		return vendita;
+	}
+
+	public void setVendita(Vendita vendita) {
+		this.vendita = vendita;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String urlImmagine) {
+		this.url = urlImmagine;
 	}
 }

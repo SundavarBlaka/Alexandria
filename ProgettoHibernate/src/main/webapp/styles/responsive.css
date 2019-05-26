@@ -31,18 +31,8 @@
 @media only screen and (max-width: 1280px) {}
 
 @media only screen and (max-width: 1199px) {
-    .main_slider {
-        min-height: 475px;
-        height: calc(100vw / 1.714);
-    }
     .main_slider_content {
         width: 80%;
-    }
-    .product-item {
-        height: 360px;
-    }
-    .product {
-        height: 320px;
     }
 }
 
@@ -70,24 +60,17 @@
     .hamburger_container {
         display: block;
     }
-    .main_slider {
-        margin-top: 100px;
-    }
     .main_slider_content {
         width: 100%;
-        padding-right: 15px;
     }
     .product-item {
         width: 25%;
     }
     .footer_nav_container {
         height: auto;
-        margin-top: 65px;
     }
     .footer_social {
         height: auto;
-        margin-top: 20px;
-        margin-bottom: 65px;
     }
     .register_container {
         width: 46%;
@@ -115,18 +98,8 @@
     h6 {
         font-size: 12px;
     }
-    .main_slider_content h6 {
-        margin-bottom: 20px;
-    }
-    .red_button a {
-        font-size: 12px;
-    }
-    .best_of_title {
-        margin-top: 44px;
-    }
     .product-item {
         width: 33.333333333333%;
-        height: 345px;
     }
     .product {
         height: 305px;
@@ -141,16 +114,14 @@
         height: auto;
     }
     .product_slider_item .product-item {
-        height: 380px;
+        height: auto;
     }
     .site-blocks-table {
         position: relative;
         margin-top: 8%;
-        width: 100%;
-    }
-    .site-blocks-table img {
-        width: 30px;
-        height: 30px;
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
     }
     .table table-bordered {
         width: 100%;
@@ -208,6 +179,9 @@
     .login_container {
         width: 60%;
         margin-left: 20%;
+    }
+    .profile{
+        margin-left: 5%;
     }
 }
 

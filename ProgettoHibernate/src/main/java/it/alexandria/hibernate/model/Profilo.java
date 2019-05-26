@@ -23,7 +23,7 @@ public class Profilo implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date data;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="proprietario")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="proprietario", fetch=FetchType.EAGER)
 	private List<Risorsa> libreria;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="mittente")
@@ -37,9 +37,6 @@ public class Profilo implements Serializable{
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="venditore")
 	private List<Vendita> risorseVendute;
-	
-	//@ElementCollection
-	//private List<Categoria> interessi;
 	
 	private String email;
 	private String numeroTel;

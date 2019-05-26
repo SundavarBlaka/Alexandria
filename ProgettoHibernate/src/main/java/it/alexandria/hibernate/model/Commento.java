@@ -16,11 +16,11 @@ public class Commento implements Serializable{
 	@Column(name="COMMENT_ID")
 	private long id;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="RISORSA_ASSOCIATA")
 	private Risorsa risorsaConnessa;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="MITTENTE_COMMENTO")
 	private Profilo mittente;
 	
