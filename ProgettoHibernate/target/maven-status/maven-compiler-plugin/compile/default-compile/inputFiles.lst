@@ -10,6 +10,7 @@ C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\h
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\IRicerca.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\Login.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\model\Commento.java
+C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\GestioneCasella.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\IGestioneRisorsa.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\GestioneProfilo.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\model\Messaggio.java
@@ -18,5 +19,6 @@ C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\h
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\GestoreSessione.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\model\Categoria.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\model\Credenziali.java
+C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\IGestioneCasella.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\control\ILogin.java
 C:\Users\lucas\eclipse-workspace\ProgettoHibernate\src\main\java\it\alexandria\hibernate\model\Carrello.java

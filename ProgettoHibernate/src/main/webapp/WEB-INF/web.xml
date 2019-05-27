@@ -24,6 +24,14 @@
 		<servlet-name>Profile</servlet-name>
 		<servlet-class>it.alexandria.hibernate.control.GestioneProfilo</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>Messaggi</servlet-name>
+		<servlet-class>it.alexandria.hibernate.control.GestioneCasella</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Messaggi</servlet-name>
+		<url-pattern>/boxmessages</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Profile</servlet-name>
 		<url-pattern>/profile</url-pattern>

@@ -71,7 +71,7 @@
                                     <li><a href="library">libreria</a></li>
                                 </ul>
                                 <ul class="navbar_user">
-                                    <li><a href="messages.html"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                                    <li><a href="boxmessages"><i class="fa fa-envelope" aria-hidden="true"></i></a>
                                     </li>
                                     <li><a href="profile.jsp"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                                     <li class="checkout">
