@@ -127,7 +127,7 @@
 					<div class="single_product_">
 						<div class="col-lg-9 image_col order-lg-2 order-1">
 							<div class="single_product_image">
-								<img src=<%=risorsa.getUrl()%> alt="No Image Found!">
+								<img src=<%="images//"+risorsa.getUrl()%> alt="No Image Found!">
 							</div>
 						</div>
 					</div>

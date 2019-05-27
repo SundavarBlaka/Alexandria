@@ -10,7 +10,11 @@
 	Carrello carrello=(Carrello) request.getSession().getAttribute("carrello");
 %>
 <html lang="it">
-
+ <script src="js/library.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="styles/bootstrap4/popper.js"></script>
+    <script src="styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="js/contact_custom.js"></script>
 <head>
     <title>AleXandria-Library</title>
     <meta charset="utf-8">
@@ -124,7 +128,7 @@
         <div class="library_container">
         <% for(Risorsa r : libreria) { %>
             <div class="product_item">
-                <img src=<%=r.getUrl()%> alt="No Image Found!">
+                <img src=<%="images//"+r.getUrl()%> alt="No Image Found!">
                 <div class="product_op">
                 <div class="product_op">
                     <button type="button" class="delete_product" onclick="$('#rimuovi_elemento<%=r.getId()%>').submit()"><i
@@ -179,7 +183,31 @@
             <form class="insert_product_form" action="library" method="get">
             	<input type="hidden" name="type" value="inserisci">
                 <input type="file" name="image" placeholder="Carica Foto" value="Carica Foto"
-                    class="insert_product_image" id="img_up" accept="image/*"><br> Titolo: <br>
+                    class="insert_product_image" id="img_up" accept="image/*">
+                    <canvas id="canvas"></canvas>
+                   <script>
+                   	document.getElementById('img_up').onchange = function imgChange() {
+                        var c=document.getElementById("canvas");
+                        var ctx=c.getContext("2d");
+                        var img=new Image();
+                        img.onload = function(){
+                        	  ctx.clearRect(0, 0, canvas.width, canvas.height);
+                              ctx.drawImage(img,0,0);
+                              send(c)
+                        };
+                        img.src = URL.createObjectURL(document.getElementById('img_up').files[0]);
+            		}
+                   	function send(c){
+                   		var str=c.toDataURL();
+                        var httpPost = new XMLHttpRequest(),
+                        path = "http://localhost:8080/alexandria/library";
+                    	path+= ("?name="+document.getElementById('img_up').files[0].name);
+                   		// Set the content type of the request to json since that's what's being sent
+                   		httpPost.open("POST", path, true);
+                    	httpPost.setRequestHeader('Content-Type', 'application/json');
+                    	httpPost.send(str);
+                   	}
+				</script><br> Titolo: <br>
                 <input type="text" name="title" class="insert_product_title" placeholder="Titolo"><br> Prezzo: <br>
                 <input type="text" name="price" placeholder="&euro; Prezzo" class="insert_product_price"> <br>Autori/e:
                 <br>
@@ -232,11 +260,6 @@
             </div>
         </div>
     </footer>
-    <script src="js/library.js"></script>
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="styles/bootstrap4/popper.js"></script>
-    <script src="styles/bootstrap4/bootstrap.min.js"></script>
-    <script src="js/contact_custom.js"></script>
 
 </body>
 

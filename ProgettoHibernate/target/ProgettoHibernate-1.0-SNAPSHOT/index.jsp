@@ -139,7 +139,7 @@
                             <div class="product-item appunti" style="height:30vh;">
                                 <div class="product discount product_filter " style="height:100%;width:100%;">
                                     <div class="product_image " style="height:80%;width:auto;">
-                                        <img src=<%=r.getUrl()%> alt="">
+                                        <img src=<%="images//"+r.getUrl()%> alt="">
                                     </div>
                                     <div class="product_info " style="height:20%;width:auto;">
 										<h6 class="product_name" style="margin:0;"><a onclick="$('#mostra_risorsa<%=r.getId()%>').submit()"><%=r.getTitolo()%></a></h6>

@@ -6,7 +6,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 
+import sun.misc.BASE64Decoder;
+
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +24,7 @@ import it.alexandria.hibernate.model.Commento;
 import it.alexandria.hibernate.model.Profilo;
 import it.alexandria.hibernate.model.Risorsa;
 
+@SuppressWarnings("restriction")
 public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 
 	/**
@@ -40,6 +47,39 @@ public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 		
 		try {
 			response.sendRedirect("library.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String line;
+		String sourceData="";
+		String name=request.getParameter("name");
+		while((line=request.getReader().readLine())!=null) {
+			sourceData+=line;
+		}
+		System.out.println("Qualunque cosa!");
+		// tokenize the data
+		String[] parts = sourceData.split(",");
+		String imageString = parts[1];
+		System.out.println(imageString);
+		// create a buffered image
+		BufferedImage image = null;
+		byte[] imageByte;
+
+		BASE64Decoder decoder = new BASE64Decoder();
+		try {
+			imageByte = decoder.decodeBuffer(imageString);
+			ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+			image = ImageIO.read(bis);
+			bis.close();
+			System.out.println("qui ok");
+			// write the image to a file
+			File outputfile = new File("C:\\Users\\lucas\\OneDrive\\Desktop\\apache-tomcat-9.0.8\\webapps\\alexandria\\images\\"+name);
+			System.out.println(ImageIO.write(image, "png", outputfile));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

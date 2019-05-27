@@ -127,7 +127,7 @@
                         <table class="table table-bordered">
                             <tr>
                                 <td class="product-thumbnail">
-                                    <img src=<%=r.getUrl()%> alt="Image" class="img-fluid">
+                                    <img src=<%="images//"+r.getUrl()%> alt="Image" class="img-fluid">
                                 </td>
                                 <td class="product-name">
                                     <span class="product_name"><b><%=r.getTitolo()%></b></span>
