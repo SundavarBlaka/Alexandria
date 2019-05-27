@@ -170,22 +170,18 @@
 							<span id="quantity_value">1</span>
 							<span class="plus" onclick="Plus()"><i class="fa fa-plus" aria-hidden="true"></i></span>
 						</div>
-						<div class="red_button add_to_cart_button">
-						<form method="get" action="profile">
+						<div class="red_button add_to_cart_button"><a onclick="$('#aggiungi_al_carrello').submit()">Aggiungi al Carrello</a></div> <br>
+						<form method="get" action="profile" id="aggiungi_al_carrello">
 							<input type="hidden" value="aggiungi" name="type">
 							<input type="hidden" name="id" value="<%=risorsa.getId()%>">
 							<input type="hidden" id="quantity" name="quantity" value="1">
-							<input type="submit" value="Aggiungi al Carrello">
 						</form>
-						</div> <br>
 					</div>
-					<div class="buy_button">
-					<form method="get" action="profile">
+					<div class="buy_button"><a onclick="$('#acquista_yes').submit()">Acquista</a></div>
+					<form method="get" action="profile" id="acquista_yes">
 						<input type="hidden" value="acquista" name="type">
 						<input type="hidden" name="id" value="<%=risorsa.getId()%>">
-						<input type="submit" value="Acquista">
 					</form>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -216,12 +212,13 @@
 			</div>
 			<div class="add_comment">
 				<div class="input_write_comment">
-					<form class="comment_form" action="resource" method="get">
+					<form class="comment_form" action="resource" method="get" id="manda_commento">
 						<input type="hidden" name="type" value="inserisciCommento">
 						<input type="hidden" name="username" value="<%=username%>">
 						<input type="text" name="testo" class="write_comment" placeholder="  Aggiungi un Commento..." />
-						<input type=submit class="comment_send_btn" value="+"></i></button>
 					</form>
+					<button class="comment_send_btn" type="button" onclick="$('#manda_commento').submit()"><i class="fa fa-comment"
+								aria-hidden="true"></i></button>
 				</div>
 			</div>
 		</div>

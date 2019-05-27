@@ -22,7 +22,7 @@
 
 <body>
 
-    <div class="super_container ">
+    <div class="super_container " style="overflow:scroll;">
 
         <!-- Header -->
 
@@ -111,7 +111,7 @@
         </div>
 
         <!-- Best Of -->
-        <div class="best_of " width=100% height=100%  style="overflow:scroll;">
+        <div class="best_of " style="overflow:scroll;height:90vh;width:100vw;">
             <div class="container ">
                 <div class="row align-items-center ">
                     <div class="col text-center ">
@@ -127,33 +127,33 @@
                 <div class="row ">
                     <div class="col ">
                         <div class="search-container ">
-                            <form action="/search " method="get ">
+                            <form action="/search " method="get">
                                 <input class="search expandright " id="searchright " type="search " name="q " placeholder="Search ">
                                 <label class="button1 searchbutton " for="searchright "><span class="mglass ">&#9906;</span></label>
                             </form>
                         </div>
-                        <div class="product-grid ">
+                        <div class="product-grid " data-isotope='{ "itemSelector ": ".product-item ", "layoutMode ": "fitRows " }'>
 
                             <!-- Product 1 -->
 							<% for(Risorsa r : risorse) { %>
-                            <div>
-                                <div>
-                                    <div class="product_image ">
+                            <div class="product-item appunti" style="height:30vh;">
+                                <div class="product discount product_filter " style="height:100%;width:100%;">
+                                    <div class="product_image " style="height:80%;width:auto;">
                                         <img src=<%=r.getUrl()%> alt="">
                                     </div>
-                                    <div class="product_info ">
-                                        <form  method="get" action="resource">
-                                        <input type="hidden" name="type" value="mostra">
-                                        <input type="hidden" name="id" value="<%=r.getId()%>">
-                                        <input type="submit" value="<%=r.getTitolo()%>">
-                                        </form>
-                                        <div class="product_price ">&euro;<%=r.getPrezzo()%></div>
+                                    <div class="product_info " style="height:20%;width:auto;">
+										<h6 class="product_name" style="margin:0;"><a onclick="$('#mostra_risorsa<%=r.getId()%>').submit()"><%=r.getTitolo()%></a></h6>
+										<div class="product_price ">&euro;<%=r.getPrezzo()%></div>
                                     </div>
+                                    <div class="red_button add_to_cart_button "><a href="# ">Aggiungi al Carrello</a></div>
                                 </div>
                             </div>
-                            <div class="red_button add_to_cart_button "><a href="# ">Aggiungi al Carrello</a></div>
+								<form  method="get" action="resource" id="mostra_risorsa<%=r.getId()%>">
+									<input type="hidden" name="type" value="mostra">
+									<input type="hidden" name="id" value="<%=r.getId()%>">
+								</form>
                             <% } %>
-                           
+
                         </div>
                     </div>
                 </div>

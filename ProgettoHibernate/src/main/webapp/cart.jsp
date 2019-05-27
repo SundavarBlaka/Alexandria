@@ -119,6 +119,7 @@
                                 <th class="product-thumbnail">Imagine</th>
                                 <th class="product-name">Prodotto</th>
                                 <th class="product-price">Prezzo</th>
+                                <th class="product-remove">Rimuovi</th>
                             </tr>
                         </table>
                         <% for(Risorsa r : carrello.getRisorseSelezionate()) { %>
@@ -132,21 +133,24 @@
                                     <span class="product_name"><b><%=r.getTitolo()%></b></span>
                                 </td>
                                 <td>&euro;<%=r.getPrezzo()%></td>
+                                <td>
+                                    <a onclick="$('#rimuovi_risorsa<%=r.getId()%>').submit()" class="fa fa-trash"></a>
+                                </td>
 
                             </tr>
                         </table>
-                        <form method="get" action="profile">
+                        <form method="get" action="profile" id="rimuovi_risorsa<%=r.getId()%>">
                         	<input type="hidden" name="type" value="rimuovi">
                             <input type="hidden" name="id" value="<%=r.getId()%>">
-                            <input type="submit" value="rimuovi">
                         </form>
                         <% } %>
                     <br>
                     <div class="buy_button">
-                    <form action="profile" method="get">
+                    <form action="profile" method="get" id="procedi_ordine">
                     	<input type="hidden" name="type" value="ordine">
-                    	<input type="submit" value="Procedi all'ordine">
                     </form>
+                    <div class="buy_button"><a onclick="$('#procedi_ordine').submit()">Procedi all'ordine </a>
+                    </div>
                     </div>
                 </div>
             </div>

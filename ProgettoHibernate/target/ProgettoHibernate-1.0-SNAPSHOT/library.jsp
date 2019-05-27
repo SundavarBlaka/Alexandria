@@ -126,10 +126,13 @@
             <div class="product_item">
                 <img src=<%=r.getUrl()%> alt="No Image Found!">
                 <div class="product_op">
-                <form method="get" action="library">
+                <div class="product_op">
+                    <button type="button" class="delete_product" onclick="$('#rimuovi_elemento<%=r.getId()%>').submit()"><i
+                            class="fa fa-trash"></i></button>
+                </div>
+                <form method="get" action="library" id="rimuovi_elemento<%=r.getId()%>">
                 	<input type="hidden" value="rimuovi" name="type">
                 	<input type="hidden" value=<%=r.getId()%> name="id">
-                    <input type="submit" class="delete_product" class="fa fa-trash">
                 </form>
                 </div>
                 <div class="product_data">
