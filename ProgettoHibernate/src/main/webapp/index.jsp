@@ -145,7 +145,13 @@
 										<h6 class="product_name" style="margin:0;"><a onclick="$('#mostra_risorsa<%=r.getId()%>').submit()"><%=r.getTitolo()%></a></h6>
 										<div class="product_price ">&euro;<%=r.getPrezzo()%></div>
                                     </div>
-                                    <div class="red_button add_to_cart_button "><a href="# ">Aggiungi al Carrello</a></div>
+                                    <div class="red_button add_to_cart_button ">
+                                    <a onclick="$('#aggiungi_al_carrello<%=r.getId()%>').submit()">Aggiungi al Carrello</a></div>
+                                    <form method="get" action="profile" id="aggiungi_al_carrello<%=r.getId()%>">
+										<input type="hidden" value="aggiungi" name="type">
+										<input type="hidden" name="id" value="<%=r.getId()%>">
+										<input type="hidden" id="quantity" name="quantity" value="1">
+									</form>
                                 </div>
                             </div>
 								<form  method="get" action="resource" id="mostra_risorsa<%=r.getId()%>">

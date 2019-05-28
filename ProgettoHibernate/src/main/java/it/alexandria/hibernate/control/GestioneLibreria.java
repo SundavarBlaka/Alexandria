@@ -136,7 +136,7 @@ public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		@SuppressWarnings("unchecked")
-		List<Risorsa> risorse = (List<Risorsa>) session.createQuery("FROM RISORSA WHERE RES_OWNER = :RES").setParameter("RES", username).getResultList();
+		List<Risorsa> risorse = (List<Risorsa>) session.createQuery("FROM RISORSA WHERE RES_OWNER = :RES AND RES_ID NOT IN (SELECT ven.risorsaVenduta.id FROM it.alexandria.hibernate.model.Vendita as ven)").setParameter("RES", username).getResultList();
 		
 		request.getSession().setAttribute("libreria",risorse);
 		session.getTransaction().commit();

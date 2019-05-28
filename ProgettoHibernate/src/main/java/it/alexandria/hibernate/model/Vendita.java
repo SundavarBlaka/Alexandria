@@ -76,4 +76,12 @@ public class Vendita implements Serializable{
 	public Vendita() {
 		super();
 	}
+
+	public Risorsa getRisorsaVenduta() {
+		return risorsaVenduta;
+	}
+
+	public void setRisorsaVenduta(Risorsa risorsaVenduta) {
+		this.risorsaVenduta = risorsaVenduta;
+	}
 }

@@ -192,7 +192,7 @@
                         var img=new Image();
                         img.onload = function(){
                         	  ctx.clearRect(0, 0, canvas.width, canvas.height);
-                              ctx.drawImage(img,0,0);
+                              ctx.drawImage(img,0,0, img.width, img.height, 0, 0, canvas.width, canvas.height);
                               send(c)
                         };
                         img.src = URL.createObjectURL(document.getElementById('img_up').files[0]);

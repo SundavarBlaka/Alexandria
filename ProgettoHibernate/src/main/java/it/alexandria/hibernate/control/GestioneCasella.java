@@ -2,6 +2,7 @@ package it.alexandria.hibernate.control;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +38,38 @@ public class GestioneCasella extends HttpServlet implements IGestioneCasella{
 			}
 		}else if(tipo.contentEquals("invia_messaggio")) {
 			inviaMessaggio(request,response);
+		}else if(tipo.contentEquals("contatta_venditore")) {
+			contattaVenditore(request,response);
 		}
+	}
+
+	private void contattaVenditore(HttpServletRequest request, HttpServletResponse response) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		String mittente=(String)request.getSession().getAttribute("mittente");
+		String destinatario=(String)request.getSession().getAttribute("destinatario");
+		Date data=java.sql.Timestamp.valueOf(LocalDateTime.now());
+		String testo=mittente+" vuole iniziare una conversazione";
+		
+		Messaggio messaggio=new Messaggio();
+		Profilo mitt=(Profilo) session.get(Profilo.class, mittente);
+		Profilo dest=(Profilo) session.get(Profilo.class, destinatario);
+		if(mitt.getMessaggiInviati().stream().filter(x->{return x.getTesto().equals(testo)&&x.getDestinatario().equals(dest);}).count()>0) {
+			session.getTransaction().commit();
+			session.close();
+			mostraMessaggi(request,response);
+			return;
+		}
+		
+		messaggio.setMittente(mitt);
+		messaggio.setDestinatario(dest);
+		messaggio.setData(data);
+		messaggio.setTesto(testo);
+		
+		session.save(messaggio);
+		session.getTransaction().commit();
+		session.close();
+		mostraMessaggi(request,response);
 	}
 
 	public void inviaMessaggio(HttpServletRequest request, HttpServletResponse response) {

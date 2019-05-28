@@ -17,10 +17,6 @@ public class Risorsa implements Serializable{
 	@Column(name="RES_ID")
 	private long id;
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="VENDITA_ID", nullable=true)
-	private Vendita vendita;
-	
 	private String titolo;
 	
 	@Enumerated(EnumType.STRING)
@@ -118,14 +114,6 @@ public class Risorsa implements Serializable{
 		super();
 	}
 
-	public Vendita getVendita() {
-		return vendita;
-	}
-
-	public void setVendita(Vendita vendita) {
-		this.vendita = vendita;
-	}
-
 	public String getUrl() {
 		return url;
 	}
@@ -148,7 +136,6 @@ public class Risorsa implements Serializable{
 		result = prime * result + ((proprietario == null) ? 0 : proprietario.hashCode());
 		result = prime * result + ((titolo == null) ? 0 : titolo.hashCode());
 		result = prime * result + ((url == null) ? 0 : url.hashCode());
-		result = prime * result + ((vendita == null) ? 0 : vendita.hashCode());
 		return result;
 	}
 

@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
-
-
 import it.alexandria.hibernate.model.Risorsa;
 
 public class Ricerca extends HttpServlet implements IRicerca{
@@ -33,8 +31,10 @@ public class Ricerca extends HttpServlet implements IRicerca{
 	public List<Risorsa> ottieniRisorse(HttpServletRequest request, HttpServletResponse response) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
+
 		@SuppressWarnings("unchecked")
-		List<Risorsa> risorse=(List<Risorsa>)session.createQuery("FROM RISORSA").getResultList();
+		List<Risorsa> risorse=(List<Risorsa>)session.createQuery("FROM RISORSA WHERE RES_ID NOT IN (SELECT ven.risorsaVenduta.id FROM it.alexandria.hibernate.model.Vendita as ven)")
+		.getResultList();
 		session.getTransaction().commit();
 		session.close();
 		return risorse;

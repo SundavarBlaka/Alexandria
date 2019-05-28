@@ -122,4 +122,8 @@ public class Profilo implements Serializable{
 	public void setRisorseVendute(List<Vendita> risorseVendute) {
 		this.risorseVendute = risorseVendute;
 	}
+	
+	public boolean equals(Profilo p) {
+		return this.username.equals(p.getUsername());
+	}
 }

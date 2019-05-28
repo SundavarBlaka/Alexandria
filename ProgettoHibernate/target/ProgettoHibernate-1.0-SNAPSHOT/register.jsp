@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 </head>
 
-<body>
+<body style="background-image : url('images/library.jpg');">
 
     <div class="super_container">
         <div class="container">

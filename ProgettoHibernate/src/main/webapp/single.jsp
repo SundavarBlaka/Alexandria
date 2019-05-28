@@ -9,6 +9,8 @@
 	Risorsa risorsa=(Risorsa)request.getSession().getAttribute("risorsa");
 	String username=(String)request.getSession().getAttribute("username");
 	Carrello carrello=(Carrello) request.getSession().getAttribute("carrello");
+	request.getSession().setAttribute("mittente", request.getSession().getAttribute("username"));
+	request.getSession().setAttribute("destinatario", risorsa.getProprietario().getUsername());
 %>
 <html lang="it">
 
@@ -143,8 +145,11 @@
 							<span>
 								<h5><%=risorsa.getProprietario().getNome()+" "+risorsa.getProprietario().getCognome()%></h5>
 							</span>
-							<button type="button" class="send_button"><i class="fa fa-envelope" aria-hidden="true"></i>
+							<button type="button" class="send_button" onclick="$('#contatta_venditore').submit()"><i class="fa fa-envelope" aria-hidden="true"></i>
 								Contatta il Venditore</a>
+								<form id="contatta_venditore" action="boxmessages" method="get">
+									<input type="hidden" name="type" value="contatta_venditore">
+								</form> 
 						</div>
 					</div>
 					<div id="price" class="product_price">&euro;<%=risorsa.getPrezzo()%></div>

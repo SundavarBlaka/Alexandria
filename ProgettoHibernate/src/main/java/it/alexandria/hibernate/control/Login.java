@@ -71,7 +71,7 @@ public class Login extends HttpServlet implements ILogin {
 			List<UCMapping> interessi= session.createQuery("FROM UCMAPPING WHERE USERNAME = :USERNAME").setParameter("USERNAME",username).getResultList();
 			
 			HttpSession sessione = request.getSession();
-			sessione.setAttribute("username", profilo.getUsername());
+			sessione.setAttribute("username", profilo.getUsername().toLowerCase());
 			sessione.setAttribute("nome", profilo.getNome());
 			sessione.setAttribute("cognome", profilo.getCognome());
 			sessione.setAttribute("data", profilo.getData());
