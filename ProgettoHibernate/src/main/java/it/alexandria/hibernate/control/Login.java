@@ -2,6 +2,8 @@ package it.alexandria.hibernate.control;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -96,16 +98,23 @@ public class Login extends HttpServlet implements ILogin {
 		while(tokenizer.hasMoreTokens()) {
 			String token=tokenizer.nextToken();
 			if(token.contains(string)) {
-				String[] varTokens=token.replaceAll(string+"=","=&").split("&");
+				String[] varTokens=token.replaceAll("(&"+string+"|^"+string+"){1}=","=&").split("&");
 				for(String str: varTokens) {
 					if(!str.contains("=")) {
+						
 						result=str;
 						break;
 					}
 				}
 			}
 		}
-		return result;
+		try {
+			return java.net.URLDecoder.decode(result,StandardCharsets.UTF_8.name());
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	private void dispatch(HttpServletRequest request, HttpServletResponse response) {

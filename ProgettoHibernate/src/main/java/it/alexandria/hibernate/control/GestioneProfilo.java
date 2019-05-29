@@ -1,6 +1,8 @@
 package it.alexandria.hibernate.control;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,16 +59,23 @@ public class GestioneProfilo extends HttpServlet implements IGestioneProfilo{
 		while(tokenizer.hasMoreTokens()) {
 			String token=tokenizer.nextToken();
 			if(token.contains(string)) {
-				String[] varTokens=token.replaceAll(string+"=","=&").split("&");
+				String[] varTokens=token.replaceAll("(&"+string+"|^"+string+"){1}=","=&").split("&");
 				for(String str: varTokens) {
 					if(!str.contains("=")) {
+						
 						result=str;
 						break;
 					}
 				}
 			}
 		}
-		return result;
+		try {
+			return java.net.URLDecoder.decode(result,StandardCharsets.UTF_8.name());
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
 	}
 	
 	private String[] getParameters(String content, String string) {
@@ -79,13 +88,21 @@ public class GestioneProfilo extends HttpServlet implements IGestioneProfilo{
 		while(tokenizer.hasMoreTokens()) {
 			String token=tokenizer.nextToken();
 			if(token.contains(string)) {
-				String[] varTokens=token.replaceAll(string+"=","&").split("&");
+				String[] varTokens=token.replaceAll("(&"+string+"|^"+string+"){1}=","&").split("&");
 				for(String str: varTokens) {
-					if(!str.contains("=")&&!str.equals("")) {
-						res.add(str);
+					if(!str.contains("=")&&!str.equals("")) {	
+						try {
+							res.add(java.net.URLDecoder.decode(str,StandardCharsets.UTF_8.name()));
+						} catch (UnsupportedEncodingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 			}
+		}
+		if(res.size()==0) {
+			return null;
 		}
 		return res.toArray(new String[0]);
 	}
