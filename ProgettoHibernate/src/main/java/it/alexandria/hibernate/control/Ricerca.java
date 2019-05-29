@@ -21,6 +21,12 @@ public class Ricerca extends HttpServlet implements IRicerca{
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		List<Risorsa> risorse=ottieniRisorse(request,response);
 		if(risorse==null) {
+			try {
+				response.sendRedirect("login.html");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return;
 		}
 		request.getSession().setAttribute("risorseRicercate", risorse);
@@ -34,20 +40,9 @@ public class Ricerca extends HttpServlet implements IRicerca{
 
 	public List<Risorsa> ottieniRisorse(HttpServletRequest request, HttpServletResponse response) {
 		if(request.getSession()==null) {
-			try {
-				response.sendRedirect("login.html");
-			}catch(IOException e) {
-				e.printStackTrace();
-			}
 			return null;
 		}else {
 			if (request.getSession().getAttribute("username") == null) {
-				try {
-					response.sendRedirect("login.html");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				return null;
 			} 
 		}
