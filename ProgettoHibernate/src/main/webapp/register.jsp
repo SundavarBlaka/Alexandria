@@ -18,7 +18,7 @@
         <div class="container">
             <div class="register_container" id="register">
                 <h4><b>Registrati</b></h4>
-                <form class="registration_form" action="loginsubmit" method="get">
+                <form class="registration_form" action="loginsubmit" method="post">
                     Username:<br>
                     <input type="hidden" name="type" value="registra"> 
                     <input type="text" name="username" class="reg_username" placeholder="Username"><br> Nome: <br>

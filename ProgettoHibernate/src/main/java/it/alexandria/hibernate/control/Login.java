@@ -1,11 +1,13 @@
 package it.alexandria.hibernate.control;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,13 +35,8 @@ public class Login extends HttpServlet implements ILogin {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		String type = request.getParameter("type");
-		if (type.equals("login")) {
-			login(request, response);
-			return;
-		} else if (type.equals("registra")) {
-			registra(request, response);
-		} else if (type.equals("cambiaPassword")) {
-			cambiaPassword(request, response);
+		if (type==null) {
+			dispatch(request, response);
 		} else if (type.equals("logout")) {
 			logout(request);
 		} else {
@@ -51,14 +48,99 @@ public class Login extends HttpServlet implements ILogin {
 			}
 			return;
 		}
+	}
+		
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response) {
+		String content="";
+		try {
+			BufferedReader reader=request.getReader();
+			String line;
+			while((line=reader.readLine())!=null) {
+				content+=line;
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		request.getSession().setAttribute("content", content);
+		String type = getParameter(content,"type");
+		
+		if (type==null) {
+			dispatch(request, response);
+		}else if (type.equals("login")) {
+			login(request, response);
+			return;
+		} else if (type.equals("cambiaPassword")) {
+			cambiaPassword(request, response);
+		} else if (type.equals("registra")) {
+			registra(request, response);
+		} else {
+			try {
+				response.sendRedirect("/alexandria");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return;
+		}
+	}
 
+	private String getParameter(String content, String string) {
+		if(content.equals("")) {
+			return null;
+		}
+		
+		String result="";
+		StringTokenizer tokenizer=new StringTokenizer(content,"\n");
+		while(tokenizer.hasMoreTokens()) {
+			String token=tokenizer.nextToken();
+			if(token.contains(string)) {
+				String[] varTokens=token.replaceAll(string+"=","=&").split("&");
+				for(String str: varTokens) {
+					if(!str.contains("=")) {
+						result=str;
+						break;
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	private void dispatch(HttpServletRequest request, HttpServletResponse response) {
+		GestoreSessione sessionManager=GestoreSessione.getInstance();
+		if(request.getSession()==null) {
+			try {
+				response.sendRedirect("login.html");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			if (request.getSession().getAttribute("username") == null) {
+				try {
+					response.sendRedirect("login.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			} else if (sessionManager.verificaSessione(request.getSession(),
+					(String) request.getSession().getAttribute("username"))) {
+				try {
+					response.sendRedirect("profile.jsp");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	private void login(HttpServletRequest request, HttpServletResponse response) {
 		response.setContentType("text/html");
-
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+		String username = getParameter((String)request.getSession().getAttribute("content"),"username");
+		String password = getParameter((String)request.getSession().getAttribute("content"),"password");
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -96,7 +178,7 @@ public class Login extends HttpServlet implements ILogin {
 		}
 
 		try {
-			response.sendRedirect("profile.jsp");
+			response.sendRedirect("profile");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,15 +201,12 @@ public class Login extends HttpServlet implements ILogin {
 	}
 
 	public void registra(HttpServletRequest request, HttpServletResponse response) {
-		String username = request.getParameter("username");
-		String nome = request.getParameter("name");
-		String surname = request.getParameter("surname");
+		String username = getParameter((String)request.getSession().getAttribute("content"),"username");
+		String nome = getParameter((String)request.getSession().getAttribute("content"),"name");
+		String surname = getParameter((String)request.getSession().getAttribute("content"),"surname");
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		Date data = java.sql.Date.valueOf(LocalDate.parse(request.getParameter("date"), dtf));
+		Date data = java.sql.Date.valueOf(LocalDate.parse(getParameter((String)request.getSession().getAttribute("content"),"date"), dtf));
 
-		/*
-		 * ANCORA DA IMPLEMENTARE
-		 */
 		List<Categoria> interessi = new ArrayList<Categoria>();
 		for (Categoria c : Categoria.values()) {
 			if (request.getParameter(c.toString()) != null) {
@@ -135,10 +214,10 @@ public class Login extends HttpServlet implements ILogin {
 			}
 		}
 
-		String email = request.getParameter("email");
-		String numeroTel = request.getParameter("telefono");
-		String password = request.getParameter("password");
-		String indirizzo = request.getParameter("indirizzo");
+		String email = getParameter((String)request.getSession().getAttribute("content"),"email");
+		String numeroTel = getParameter((String)request.getSession().getAttribute("content"),"telefono");
+		String password = getParameter((String)request.getSession().getAttribute("content"),"password");
+		String indirizzo = getParameter((String)request.getSession().getAttribute("content"),"indirizzo");
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -182,9 +261,28 @@ public class Login extends HttpServlet implements ILogin {
 	}
 
 	public void cambiaPassword(HttpServletRequest request, HttpServletResponse response) {
-		String username = request.getParameter("username");
-		String passwordVecchia = request.getParameter("passwordVecchia");
-		String nuovaPassword = request.getParameter("passwordNuova");
+		if(request.getSession()==null) {
+			try {
+				response.sendRedirect("login.html");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}else {
+			if (request.getSession().getAttribute("username") == null) {
+				try {
+					response.sendRedirect("login.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			} 
+		}
+		
+		String username = getParameter((String)request.getSession().getAttribute("content"),"username");
+		String passwordVecchia = getParameter((String)request.getSession().getAttribute("content"),"passwordVecchia");
+		String nuovaPassword = getParameter((String)request.getSession().getAttribute("content"),"passwordNuova");
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -194,24 +292,19 @@ public class Login extends HttpServlet implements ILogin {
 			attuali.setPassword(nuovaPassword);
 			session.getTransaction().commit();
 			session.close();
-
+			
 			try {
-				response.sendRedirect("profile.jsp");
+				response.sendRedirect("profile?type=modifica");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 			return;
 		}
 
 		session.getTransaction().commit();
 		session.close();
-		try {
-			response.sendRedirect("/alexandria");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return;
 	}
 

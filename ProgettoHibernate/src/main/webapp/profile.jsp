@@ -80,7 +80,7 @@
                                 </ul>
                                 <ul class="navbar_user ">
                                     <li><a href="boxmessages"><i class="fa fa-envelope " aria-hidden="true "></i></a></li>
-                                    <li><a href="profile.jsp"><i class="fa fa-user " aria-hidden="true "></i></a></li>
+                                    <li><a href="profile"><i class="fa fa-user " aria-hidden="true "></i></a></li>
                                     <li class="checkout ">
                                         <a href="cart.jsp">
                                             <i class="fa fa-shopping-cart " aria-hidden="true "></i>
@@ -152,13 +152,13 @@
                     <b>Clicca per Modificare i dati Personali!</b><br>
                     <button onclick="showModify()"><i class="fa fa-edit"></i></button>
                     <div id="modify" class="modify">
-                        <form class="modify_form" action="loginsubmit" method="get">
+                        <form class="modify_form" action="loginsubmit" method="post">
                         	<input type="hidden" name="type" value="cambiaPassword">
                         	<input type="hidden" name="username" value=<%=username%>>
                             Email: <br>
-                            <input type="email" name="email"><br>
+                            <input type="text" name="email"><br>
                             Tel: <br>
-                            <input type="tel" name="tel"><br>
+                            <input type="text" name="tel"><br>
                             Indirizzo: <br>
                             <textarea type="text" name="address" rows="2" cols="30"></textarea><br>Scegli fra gli Interessi: <br>
 
@@ -167,7 +167,7 @@
                         <ul class="items" id="items">
                           <%
                             for(Categoria c: Categoria.values()){
-                              out.println("<li><input type=\"checkbox\" name=\""+c.toString()+"\" value=\""+c.toString()+"\"/> "+c.toString()+"</li>");
+                              out.println("<li><input type=\"checkbox\" name=\""+"interessi"+"\" value=\""+c.toString()+"\"/> "+c.toString()+"</li>");
                             }
                             %>
                         </ul>

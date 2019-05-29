@@ -3,6 +3,7 @@ package it.alexandria.hibernate.control;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,16 +20,37 @@ public class Ricerca extends HttpServlet implements IRicerca{
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		List<Risorsa> risorse=ottieniRisorse(request,response);
+		if(risorse==null) {
+			return;
+		}
 		request.getSession().setAttribute("risorseRicercate", risorse);
 		try {
-			response.sendRedirect("index.jsp");
-		} catch (IOException e) {
+			request.getRequestDispatcher("index.jsp").forward(request, response);;
+		} catch (IOException | ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public List<Risorsa> ottieniRisorse(HttpServletRequest request, HttpServletResponse response) {
+		if(request.getSession()==null) {
+			try {
+				response.sendRedirect("login.html");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}else {
+			if (request.getSession().getAttribute("username") == null) {
+				try {
+					response.sendRedirect("login.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			} 
+		}
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 

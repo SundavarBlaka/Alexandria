@@ -76,7 +76,7 @@
 								<ul class="navbar_user">
 									<li><a href="boxmessages"><i class="fa fa-envelope" aria-hidden="true"></i></a>
 									</li>
-									<li><a href="profile.jsp"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+									<li><a href="profile"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 									<li class="checkout">
 										<a href="cart.jsp">
 											<i class="fa fa-shopping-cart" aria-hidden="true"></i>

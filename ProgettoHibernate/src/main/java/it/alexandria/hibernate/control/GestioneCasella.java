@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +45,24 @@ public class GestioneCasella extends HttpServlet implements IGestioneCasella{
 	}
 
 	private void contattaVenditore(HttpServletRequest request, HttpServletResponse response) {
+		if(request.getSession()==null) {
+			try {
+				response.sendRedirect("login.html");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}else {
+			if (request.getSession().getAttribute("username") == null) {
+				try {
+					response.sendRedirect("login.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			} 
+		}
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		String mittente=(String)request.getSession().getAttribute("mittente");
@@ -73,6 +92,25 @@ public class GestioneCasella extends HttpServlet implements IGestioneCasella{
 	}
 
 	public void inviaMessaggio(HttpServletRequest request, HttpServletResponse response) {
+		if(request.getSession()==null) {
+			try {
+				response.sendRedirect("login.html");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}else {
+			if (request.getSession().getAttribute("username") == null) {
+				try {
+					response.sendRedirect("login.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			} 
+		}
+		
 		String destinatario=request.getParameter("destinatario");
 		String username=(String)request.getSession().getAttribute("username");
 		String testo=request.getParameter("testo");
@@ -105,6 +143,25 @@ public class GestioneCasella extends HttpServlet implements IGestioneCasella{
 	}
 
 	public void mostraMessaggi(HttpServletRequest request, HttpServletResponse response) {
+		if(request.getSession()==null) {
+			try {
+				response.sendRedirect("login.html");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}else {
+			if (request.getSession().getAttribute("username") == null) {
+				try {
+					response.sendRedirect("login.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			} 
+		}
+		
 		String username=(String)request.getSession().getAttribute("username");
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -125,8 +182,8 @@ public class GestioneCasella extends HttpServlet implements IGestioneCasella{
 		request.getSession().setAttribute("personeUniche", personeUniche);
 		request.getSession().setAttribute("messaggi", messaggi);
 		try {
-			response.sendRedirect("messages.jsp");
-		} catch (IOException e) {
+			request.getRequestDispatcher("messages.jsp").forward(request, response);
+		} catch (IOException | ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

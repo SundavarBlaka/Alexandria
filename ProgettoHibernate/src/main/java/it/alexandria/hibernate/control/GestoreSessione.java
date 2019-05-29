@@ -27,11 +27,19 @@ public class GestoreSessione {
 		mappaSessioniAttive.remove(sessione);
 	}
 	
-	public String verificaSessione(HttpSession sessione) {
+	public boolean verificaSessione(HttpSession sessione, String username) {
 		String result = null;
+		
+		if(sessione==null||username==null) {
+			return false;
+		}
 		
 		result=mappaSessioniAttive.get(sessione);
 		
-		return result;
+		if(result==null) {
+			return false;
+		}
+		
+		return result.equals(username);
 	}
 }

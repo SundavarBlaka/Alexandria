@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +26,7 @@ public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		String tipo=request.getParameter("type");
 		if(tipo==null) {
-			
+			mostraRisorsa(request,response);
 		}else if(tipo.equals("modifica")) {
 			modificaRisorsa(request,response);
 		}else if(tipo.contentEquals("mostra")) {
@@ -36,20 +37,73 @@ public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
 	}
 
 	public boolean modificaRisorsa(HttpServletRequest request, HttpServletResponse response) {
+		if(request.getSession()==null) {
+			try {
+				response.sendRedirect("login.html");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return false;
+		}else {
+			if (request.getSession().getAttribute("username") == null) {
+				try {
+					response.sendRedirect("login.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return false;
+			} 
+		}
+		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		
 		Risorsa risorsa = (Risorsa) session.get(Risorsa.class, Long.parseLong(request.getParameter("id")));
-		risorsa.setPrezzo(Float.parseFloat(request.getParameter("price")));
-		risorsa.setDescrizione(request.getParameter("description"));
+		String prezzo = request.getParameter("price");
+		String descrizione = request.getParameter("description");
+		
+		if(!prezzo.equals("")) {
+			risorsa.setPrezzo(Float.parseFloat(prezzo));
+		}
+		if(!descrizione.equals("")) {
+			risorsa.setDescrizione(descrizione);
+		}
+		
 		session.save(risorsa);
 		session.getTransaction().commit();
 		session.close();
+		
+		try {
+			response.sendRedirect("library");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return true;
 	}
 
 	public void inserisciCommento(HttpServletRequest request, HttpServletResponse response) {
+		if(request.getSession()==null) {
+			try {
+				response.sendRedirect("login.html");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}else {
+			if (request.getSession().getAttribute("username") == null) {
+				try {
+					response.sendRedirect("login.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			} 
+		}
+		
 		Date data=java.sql.Timestamp.valueOf(LocalDateTime.now());
 		String username=request.getParameter("username");
 		String testo=request.getParameter("testo");
@@ -58,6 +112,7 @@ public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
 		session.beginTransaction();
 		Profilo profilo = (Profilo) session.get(Profilo.class, username);
 		Risorsa risorsa=(Risorsa)request.getSession().getAttribute("risorsa");
+		
 		Commento commento = new Commento();
 		commento.setData(data);
 		commento.setMittente(profilo);
@@ -77,9 +132,8 @@ public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
 		session.close();
 		
 		try {
-			
-			response.sendRedirect("single.jsp");
-		} catch (IOException e) {
+			request.getRequestDispatcher("single.jsp").forward(request, response);
+		} catch (IOException | ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -90,7 +144,26 @@ public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
 		
 	}
 
-	public void mostraRisorsa(HttpServletRequest request, HttpServletResponse reponse) {
+	public void mostraRisorsa(HttpServletRequest request, HttpServletResponse response) {
+		if(request.getSession()==null) {
+			try {
+				response.sendRedirect("login.html");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}else {
+			if (request.getSession().getAttribute("username") == null) {
+				try {
+					response.sendRedirect("login.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return;
+			} 
+		}
+		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		
@@ -99,7 +172,7 @@ public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
 		session.getTransaction().commit();
 		session.close();
 		try {
-			reponse.sendRedirect("single.jsp");
+			response.sendRedirect("single.jsp");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

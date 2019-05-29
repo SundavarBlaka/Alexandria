@@ -13,6 +13,7 @@ import java.io.File;
 import sun.misc.BASE64Decoder;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,21 +37,12 @@ public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		String tipo=request.getParameter("type");
 		if(tipo==null) {
-			
+			mostraLibreria(request,response);
 		}else if(tipo.equals("inserisci")) {
 			inserisciRisorsa(request,response);
 		}else if(tipo.equals("rimuovi")) {
 			rimuoviRisorsa(request,response);
-		}
-		
-		mostraLibreria(request,response);
-		
-		try {
-			response.sendRedirect("library.jsp");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}	
 	}
 	
 	@Override
@@ -87,6 +79,25 @@ public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 	}
 
 	public boolean inserisciRisorsa(HttpServletRequest request, HttpServletResponse response) {
+		if(request.getSession()==null) {
+			try {
+				response.sendRedirect("login.html");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return false;
+		}else {
+			if (request.getSession().getAttribute("username") == null) {
+				try {
+					response.sendRedirect("login.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return false;
+			} 
+		}
+		
 		Risorsa risorsa = new Risorsa();
 		risorsa.setAutori(request.getParameter("authors"));
 		risorsa.setCategoria(Categoria.valueOf(request.getParameter("interest")));
@@ -110,6 +121,13 @@ public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 		session.getTransaction().commit();
 		session.close();
 		
+		try {
+			response.sendRedirect("library");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return true;
 	}
 
@@ -127,10 +145,35 @@ public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 		session.getTransaction().commit();
 		session.close();
 		
+		try {
+			response.sendRedirect("library");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}
 
 	public boolean mostraLibreria(HttpServletRequest request, HttpServletResponse response) {
+		if(request.getSession()==null) {
+			try {
+				response.sendRedirect("login.html");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return false;
+		}else {
+			if (request.getSession().getAttribute("username") == null) {
+				try {
+					response.sendRedirect("login.html");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return false;
+			} 
+		}
+		
 		String username=(String) request.getSession().getAttribute("username");
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -141,6 +184,13 @@ public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 		request.getSession().setAttribute("libreria",risorse);
 		session.getTransaction().commit();
 		session.close();
+		
+		try {
+			request.getRequestDispatcher("library.jsp").forward(request, response);
+		} catch (IOException | ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return true;
 	}
