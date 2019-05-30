@@ -62,7 +62,7 @@ public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
 		Risorsa risorsa = (Risorsa) session.get(Risorsa.class, Long.parseLong(request.getParameter("id")));
 		String prezzo = request.getParameter("price");
 		String descrizione = request.getParameter("description");
-		
+		HibernateUtil.printLog("Modiifica risorsa con id "+risorsa.getId());
 		if(!prezzo.equals("")) {
 			risorsa.setPrezzo(Float.parseFloat(prezzo));
 		}
@@ -119,7 +119,8 @@ public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
 		commento.setRisorsaConnessa(risorsa);
 		commento.setTesto(testo);
 		
-		session.save(commento);
+		long id=(long)session.save(commento);
+		HibernateUtil.printLog("Inserimento commento con id "+id+" da parte di "+username+" su risorsa "+ risorsa.getId());
 		session.getTransaction().commit();
 		session.close();
 		
@@ -166,8 +167,8 @@ public class GestioneRisorsa extends HttpServlet implements IGestioneRisorsa{
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		
 		Risorsa risorsa = (Risorsa) session.get(Risorsa.class, Long.parseLong(request.getParameter("id")));
+		HibernateUtil.printLog("Avviato procedura mostra su risorsa "+risorsa.getId());
 		request.getSession().setAttribute("risorsa", risorsa);
 		session.getTransaction().commit();
 		session.close();

@@ -48,7 +48,7 @@ public class Ricerca extends HttpServlet implements IRicerca{
 		}
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-
+		HibernateUtil.printLog("Avvenuta ricerca da utente "+request.getSession().getAttribute("username"));
 		@SuppressWarnings("unchecked")
 		List<Risorsa> risorse=(List<Risorsa>)session.createQuery("FROM RISORSA WHERE RES_ID NOT IN (SELECT ven.risorsaVenduta.id FROM it.alexandria.hibernate.model.Vendita as ven)")
 		.getResultList();

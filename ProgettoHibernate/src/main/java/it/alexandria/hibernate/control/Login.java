@@ -118,6 +118,7 @@ public class Login extends HttpServlet implements ILogin {
 	}
 
 	private void dispatch(HttpServletRequest request, HttpServletResponse response) {
+		HibernateUtil.printLog("Richiesta di dispatch");
 		GestoreSessione sessionManager=GestoreSessione.getInstance();
 		if(request.getSession()==null) {
 			try {
@@ -147,14 +148,15 @@ public class Login extends HttpServlet implements ILogin {
 	}
 
 	private void login(HttpServletRequest request, HttpServletResponse response) {
-		response.setContentType("text/html");
-		String username = getParameter((String)request.getSession().getAttribute("content"),"username");
-		String password = getParameter((String)request.getSession().getAttribute("content"),"password");
-
+		String content = (String)request.getSession().getAttribute("content");
+		String username = getParameter(content,"username");
+		String password = getParameter(content,"password");
+		HibernateUtil.printLog("Richiesta di login in corso da parte di "+username);
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 
 		if (verificaCredenziali(username, password)) {
+			HibernateUtil.printLog("Login di "+username+" avvenuto con successo");
 			GestoreSessione gestore = GestoreSessione.getInstance();
 			gestore.aggiungiSessione(request.getSession(), username);
 			Profilo profilo = (Profilo) session.get(Profilo.class, username);
@@ -210,11 +212,13 @@ public class Login extends HttpServlet implements ILogin {
 	}
 
 	public void registra(HttpServletRequest request, HttpServletResponse response) {
-		String username = getParameter((String)request.getSession().getAttribute("content"),"username");
-		String nome = getParameter((String)request.getSession().getAttribute("content"),"name");
-		String surname = getParameter((String)request.getSession().getAttribute("content"),"surname");
+		String content = (String)request.getSession().getAttribute("content");
+		String username = getParameter(content,"username");
+		HibernateUtil.printLog("Richiesta di registrazione da parte di "+username);
+		String nome = getParameter(content,"name");
+		String surname = getParameter(content,"surname");
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		Date data = java.sql.Date.valueOf(LocalDate.parse(getParameter((String)request.getSession().getAttribute("content"),"date"), dtf));
+		Date data = java.sql.Date.valueOf(LocalDate.parse(getParameter(content,"date"), dtf));
 
 		List<Categoria> interessi = new ArrayList<Categoria>();
 		for (Categoria c : Categoria.values()) {
@@ -223,10 +227,10 @@ public class Login extends HttpServlet implements ILogin {
 			}
 		}
 
-		String email = getParameter((String)request.getSession().getAttribute("content"),"email");
-		String numeroTel = getParameter((String)request.getSession().getAttribute("content"),"telefono");
-		String password = getParameter((String)request.getSession().getAttribute("content"),"password");
-		String indirizzo = getParameter((String)request.getSession().getAttribute("content"),"indirizzo");
+		String email = getParameter(content,"email");
+		String numeroTel = getParameter(content,"telefono");
+		String password = getParameter(content,"password");
+		String indirizzo = getParameter(content,"indirizzo");
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -289,9 +293,11 @@ public class Login extends HttpServlet implements ILogin {
 			} 
 		}
 		
-		String username = getParameter((String)request.getSession().getAttribute("content"),"username");
-		String passwordVecchia = getParameter((String)request.getSession().getAttribute("content"),"passwordVecchia");
-		String nuovaPassword = getParameter((String)request.getSession().getAttribute("content"),"passwordNuova");
+		String content = (String)request.getSession().getAttribute("content");
+		String username = getParameter(content,"username");
+		HibernateUtil.printLog("Richiesta di cambio password da parte di "+username);
+		String passwordVecchia = getParameter(content,"passwordVecchia");
+		String nuovaPassword = getParameter(content,"passwordNuova");
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -310,6 +316,13 @@ public class Login extends HttpServlet implements ILogin {
 			}
 
 			return;
+		}else {
+			try {
+				response.sendRedirect("profile");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		session.getTransaction().commit();
@@ -318,8 +331,8 @@ public class Login extends HttpServlet implements ILogin {
 	}
 
 	public void logout(HttpServletRequest request) {
-		GestoreSessione sessione = GestoreSessione.getInstance();
-		sessione.rimuoviSessione(request.getSession());
+		HibernateUtil.printLog("Richiesta di logout da parte di "+request.getSession().getAttribute("username"));
+		request.getSession().invalidate();
 	}
 
 }

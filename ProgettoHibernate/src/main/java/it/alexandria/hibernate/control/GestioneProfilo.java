@@ -126,7 +126,7 @@ public class GestioneProfilo extends HttpServlet implements IGestioneProfilo{
 				return;
 			} 
 		}
-		
+		HibernateUtil.printLog("Richiesta di acquisto da carrello da utente "+request.getSession().getAttribute("username"));
 		Carrello carrello=(Carrello)request.getSession().getAttribute("carrello");
 		request.getSession().setAttribute("carrello",carrello);
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -139,7 +139,8 @@ public class GestioneProfilo extends HttpServlet implements IGestioneProfilo{
 			vendita.setVenditore(venditore);
 			vendita.setData(java.sql.Timestamp.valueOf(LocalDateTime.now()));
 			vendita.setRisorsaVenduta(r);	
-			session.save(vendita);
+			long id=(long)session.save(vendita);
+			HibernateUtil.printLog("Avvenuto nuovo acquisto con successo. ID acquisto: "+id);
 		}
 		
 		carrello.setRisorseSelezionate(new ArrayList<Risorsa>());;
@@ -187,7 +188,8 @@ public class GestioneProfilo extends HttpServlet implements IGestioneProfilo{
 		vendita.setData(java.sql.Timestamp.valueOf(LocalDateTime.now()));
 		vendita.setRisorsaVenduta(risorsaAcquistata);
 		
-		session.save(vendita);
+		long id=(long)session.save(vendita);
+		HibernateUtil.printLog("Avvenuto nuovo acquisto con successo. ID acquisto: "+id);
 		session.getTransaction().commit();
 		session.close();
 		
@@ -220,6 +222,7 @@ public class GestioneProfilo extends HttpServlet implements IGestioneProfilo{
 		
 		//int quantity=Integer.parseInt(request.getParameter("quantity"));
 		long idRisorsa=Long.parseLong(request.getParameter("id"));
+		HibernateUtil.printLog(request.getSession().getAttribute("username")+" aggiunge al carrello la risorsa "+idRisorsa);
 		Carrello carrello=(Carrello)request.getSession().getAttribute("carrello");
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -266,6 +269,7 @@ public class GestioneProfilo extends HttpServlet implements IGestioneProfilo{
 		}
 		
 		long idRisorsa=Long.parseLong(request.getParameter("id"));
+		HibernateUtil.printLog(request.getSession().getAttribute("username")+" rimuove dal carrello la risorsa "+idRisorsa);
 		Carrello carrello=(Carrello)request.getSession().getAttribute("carrello");
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -304,12 +308,13 @@ public class GestioneProfilo extends HttpServlet implements IGestioneProfilo{
 			} 
 		}
 		
-		String email=getParameter((String)request.getSession().getAttribute("content"),"email");
-		String tel=getParameter((String)request.getSession().getAttribute("content"),"tel");
-		String address=getParameter((String)request.getSession().getAttribute("content"),"address");
-		String[] interessi=getParameters((String)request.getSession().getAttribute("content"),"interessi");
+		String content = (String)request.getSession().getAttribute("content");
+		String email=getParameter(content,"email");
+		String tel=getParameter(content,"tel");
+		String address=getParameter(content,"address");
+		String[] interessi=getParameters(content,"interessi");
 		String username=(String)request.getSession().getAttribute("username");
-		
+		HibernateUtil.printLog(request.getSession().getAttribute("username")+" richiede di modificare il suo profilo");
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		
@@ -348,6 +353,7 @@ public class GestioneProfilo extends HttpServlet implements IGestioneProfilo{
 		session.save(profilo);
 		session.getTransaction().commit();
 		session.close();
+		HibernateUtil.printLog(request.getSession().getAttribute("username")+": modifica profilo avvenuta con successo");
 		
 		try {
 			response.sendRedirect("profile");
@@ -377,7 +383,7 @@ public class GestioneProfilo extends HttpServlet implements IGestioneProfilo{
 				return;
 			} 
 		}
-		
+		HibernateUtil.printLog(request.getSession().getAttribute("username")+" richiede di mostrare il suo profilo");
 		try {
 			request.getRequestDispatcher("profile.jsp").forward(request,response);
 		} catch (ServletException | IOException e) {

@@ -7,5 +7,6 @@ public enum Categoria {
 	STORIA,
 	GEOGRAFIA,
 	FISICA,
-	SCIENZE
+	SCIENZE,
+	MUSICA
 }

@@ -69,7 +69,7 @@ public class GestioneCasella extends HttpServlet implements IGestioneCasella{
 		String destinatario=(String)request.getSession().getAttribute("destinatario");
 		Date data=java.sql.Timestamp.valueOf(LocalDateTime.now());
 		String testo=mittente+" vuole iniziare una conversazione";
-		
+		HibernateUtil.printLog(mittente+" vuole contattare"+destinatario);
 		Messaggio messaggio=new Messaggio();
 		Profilo mitt=(Profilo) session.get(Profilo.class, mittente);
 		Profilo dest=(Profilo) session.get(Profilo.class, destinatario);
@@ -85,7 +85,8 @@ public class GestioneCasella extends HttpServlet implements IGestioneCasella{
 		messaggio.setData(data);
 		messaggio.setTesto(testo);
 		
-		session.save(messaggio);
+		long id=(long)session.save(messaggio);
+		HibernateUtil.printLog(request.getSession().getAttribute("username")+" invia messaggio con ID "+id);
 		session.getTransaction().commit();
 		session.close();
 		mostraMessaggi(request,response);
@@ -127,7 +128,8 @@ public class GestioneCasella extends HttpServlet implements IGestioneCasella{
 		List<Messaggio> messaggi=(List<Messaggio>)request.getSession().getAttribute("messaggi");
 		messaggi.add(messaggio);
 		request.getSession().setAttribute("messaggi", messaggi);
-		session.save(messaggio);
+		long id=(long)session.save(messaggio);
+		HibernateUtil.printLog(request.getSession().getAttribute("username")+" spedisce messaggio a "+destinatario+" con ID "+id);
 		session.close();
 		try {
 			response.sendRedirect("messages.jsp");
@@ -163,6 +165,7 @@ public class GestioneCasella extends HttpServlet implements IGestioneCasella{
 		}
 		
 		String username=(String)request.getSession().getAttribute("username");
+		HibernateUtil.printLog(request.getSession().getAttribute("username")+" richiede di modificare la sua casella messaggi");
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		@SuppressWarnings("unchecked")

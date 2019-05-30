@@ -200,7 +200,7 @@
                    	function send(c){
                    		var str=c.toDataURL();
                         var httpPost = new XMLHttpRequest(),
-                        path = "http://localhost:8080/alexandria/library";
+                        path = "http://87.10.48.99:8080/alexandria/library";
                     	path+= ("?name="+document.getElementById('img_up').files[0].name);
                    		// Set the content type of the request to json since that's what's being sent
                    		httpPost.open("POST", path, true);

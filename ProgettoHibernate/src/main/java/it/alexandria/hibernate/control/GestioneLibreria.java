@@ -97,7 +97,7 @@ public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 				return false;
 			} 
 		}
-		
+		HibernateUtil.printLog(request.getSession().getAttribute("username")+" richiede di inserire una risorsa");
 		Risorsa risorsa = new Risorsa();
 		risorsa.setAutori(request.getParameter("authors"));
 		risorsa.setCategoria(Categoria.valueOf(request.getParameter("interest")));
@@ -117,7 +117,8 @@ public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 		risorsa.setDescrizione(request.getParameter("description"));
 		risorsa.setUrl(request.getParameter("image"));
 		
-		session.save(risorsa);
+		long id=(long)session.save(risorsa);
+		HibernateUtil.printLog(request.getSession().getAttribute("username")+":inserimento avvenuto con successo. ID risorsa:"+id);
 		session.getTransaction().commit();
 		session.close();
 		
@@ -175,7 +176,7 @@ public class GestioneLibreria extends HttpServlet implements IGestioneLibreria{
 		}
 		
 		String username=(String) request.getSession().getAttribute("username");
-		
+		HibernateUtil.printLog(request.getSession().getAttribute("username")+" richiede di mostrare la sua libreria");
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		@SuppressWarnings("unchecked")
