@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+      <TabPane prefHeight="414.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Log">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="log_txtinput" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="253.0" promptText="Inserisci chiave di ricerca" />
+                        <Button fx:id="log_btn_cerca" layoutX="289.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#log_cerca" text="Cerca" />
+                        <TextArea fx:id="log_txtarea" disable="true" layoutX="14.0" layoutY="54.0" prefHeight="299.0" prefWidth="610.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Visualizza Vendite">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="vendite_txtinput_venditore" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="253.0" promptText="Inserisci username venditore" />
+                        <TextField fx:id="vendite_txtinput_acquirente" layoutX="14.0" layoutY="52.0" prefHeight="26.0" prefWidth="253.0" promptText="Inserisci username acquirente" />
+                        <TextField fx:id="vendite_txtinput_risorsa" layoutX="14.0" layoutY="89.0" prefHeight="26.0" prefWidth="253.0" promptText="Inserisci id risorsa" />
+                        <ListView fx:id="log_listview" layoutX="14.0" layoutY="126.0" prefHeight="227.0" prefWidth="612.0" />
+                        <Button fx:id="vendite_btn_cerca_venditore" layoutX="289.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#vendite_cerca_venditore" prefWidth="126.0" text="Cerca" />
+                        <Button fx:id="vendite_btn_cerca_acquirente" layoutX="289.0" layoutY="52.0" mnemonicParsing="false" onMouseClicked="#vendite_cerca_acquirente" prefWidth="126.0" text="Cerca" />
+                        <Button fx:id="vendite_btn_cerca_risorsa" layoutX="289.0" layoutY="89.0" mnemonicParsing="false" onMouseClicked="#vendite_cerca_risorsa" prefWidth="126.0" text="Cerca" />
+                        <Button fx:id="vendite_btn_cerca_tutto" layoutX="468.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#vendite_cerca_tutto" prefHeight="101.0" prefWidth="126.0" text="Cerca tutto" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Rimozione Risorse">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="risorse_txtinput_risorsa" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="253.0" promptText="Inserisci id risorsa" />
+                        <Button fx:id="risorse_btn_cerca_risorsa" layoutX="289.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Cerca per id" />
+                        <ListView fx:id="risorse_listview" layoutX="14.0" layoutY="139.0" prefHeight="213.0" prefWidth="517.0" />
+                        <Button fx:id="risorse_btn_rimuovi" layoutX="547.0" layoutY="146.0" mnemonicParsing="false" text="Rimuovi" />
+                        <TextField fx:id="risorse_txtinput_titolo" layoutX="14.0" layoutY="51.0" prefHeight="26.0" prefWidth="253.0" promptText="Inserisci titolo" />
+                        <Button fx:id="risorse_btn_cerca_titolo" layoutX="289.0" layoutY="51.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Cerca per id" />
+                        <TextField fx:id="risorse_txtinput_utente" layoutX="14.0" layoutY="87.0" prefHeight="26.0" prefWidth="253.0" promptText="Inserisci utente associato" />
+                        <Button fx:id="risorse_btn_cerca_utente" layoutX="289.0" layoutY="87.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Cerca per utente" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Rimozione Utenti">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="utenti_txtinput_utente" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="253.0" promptText="Inserisci username" />
+                        <Button fx:id="utenti_btn_cerca_utente" layoutX="289.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Cerca" />
+                        <ListView fx:id="utenti_listview" layoutX="14.0" layoutY="139.0" prefHeight="213.0" prefWidth="517.0" />
+                        <Button fx:id="utenti_btn_rimuovi" layoutX="547.0" layoutY="146.0" mnemonicParsing="false" text="Rimuovi" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Rimozione Commenti">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="commenti_txtinput_commento" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="253.0" promptText="Inserisci id commento" />
+                        <Button fx:id="commenti_btn_cerca_commento" layoutX="289.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Cerca per id" />
+                        <ListView fx:id="utenti_listview" layoutX="14.0" layoutY="139.0" prefHeight="213.0" prefWidth="517.0" />
+                        <Button fx:id="commenti_btn_rimuovi" layoutX="547.0" layoutY="146.0" mnemonicParsing="false" text="Rimuovi" />
+                        <TextField fx:id="commenti_txtinput_risorsa" layoutX="14.0" layoutY="51.0" prefHeight="26.0" prefWidth="253.0" promptText="Inserisci id risorsa" />
+                        <Button fx:id="commenti_btn_cerca_risorsa" layoutX="289.0" layoutY="51.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Cerca per id" />
+                        <TextField fx:id="commenti_txtinput_utente" layoutX="14.0" layoutY="87.0" prefHeight="26.0" prefWidth="253.0" promptText="Inserisci utente associato" />
+                        <Button fx:id="commenti_btn_cerca_utente" layoutX="289.0" layoutY="87.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Cerca per utente" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+  </children>
+</VBox>
